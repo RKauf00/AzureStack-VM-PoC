@@ -65,7 +65,7 @@
         },
         "adminUsername": {
             "type": "string",
-            "defaultValue": "AzStackAdmin"
+            "defaultValue": "AzStackAdmin",
             "metadata": {
                 "name": "AzStackAdmin"
             }
