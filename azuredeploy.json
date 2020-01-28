@@ -51,9 +51,9 @@
                 28,
                 32
             ],
-            "defaultValue": 6,
+            "defaultValue": 8,
             "metadata": {
-                "name": 6
+                "name": 8
             }
         },
         "virtualNetworkName": {
