@@ -34,8 +34,7 @@
 
     # Set Administrator Password
     
-        #$SecureAdminPassword = Read-Host -AsSecureString -Prompt "Provide local Administrator password for Azure Stack host VM" | ConvertTo-SecureString -AsPlainText -Force
-        $SecureAdminPassword = "1q2w9o0p!Q@W(O)P" | ConvertTo-SecureString -AsPlainText -Force
+        $SecureAdminPassword = Read-Host -AsSecureString -Prompt "Provide local Administrator password for Azure Stack host VM" | ConvertTo-SecureString -AsPlainText -Force
     
     # Variables
 
