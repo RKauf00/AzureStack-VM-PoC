@@ -20,9 +20,9 @@
                 "Standard_D64s_v3",
                 "Standard_E64s_v3"
             ],
-            "defaultValue": "Standard_E20s_v3",
+            "defaultValue": "Standard_E32-16s_v3",
             "metadata": {
-                "name": "Standard_E20s_v3"
+                "name": "Standard_E32-16s_v3""
             }
         },
         "dataDiskSizeinGB": {
@@ -32,9 +32,9 @@
                 512,
                 1024
             ],
-            "defaultValue": 256,
+            "defaultValue": 1024,
             "metadata": {
-                "name": 256
+                "name": 1024
             }
         },
         "dataDiskCount": {
@@ -50,16 +50,16 @@
                 28,
                 32
             ],
-            "defaultValue": 4,
+            "defaultValue": 6,
             "metadata": {
-                "name": 4
+                "name": 6
             }
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "AzureStack-VNET",
+            "defaultValue": "AzStack-VNET",
             "metadata": {
-                "name": "AzureStack-VNET"
+                "name": "AzStack-VNET"
             }
         },
         "adminPassword": {
@@ -99,42 +99,6 @@
         },
         "publicDnsName": {
             "type": "string"
-        },
-        "autoShutdownStatus": {
-            "type": "string",
-            "defaultValue": "Disabled",
-            "allowedValues": [
-                "Enabled",
-                "Disabled"
-            ],
-            "metadata": {
-                "name": "Disabled"
-            }
-        },
-        "autoShutdownTime": {
-            "type": "string",
-            "defaultValue": "23:00",
-            "metadata": {
-                "name": "23:00"
-            }
-        },
-        "autoShutdownTimeZone": {
-            "type": "string",
-            "defaultValue": "UTC",
-            "metadata": {
-                "name": "UTC"
-            }
-        },
-        "autoShutdownNotificationStatus": {
-            "type": "string",
-            "defaultValue": "Disabled",
-            "allowedValues": [
-                "Enabled",
-                "Disabled"
-            ],
-            "metadata": {
-                "name": "Disabled"
-            }
         },
         "autoDownloadASDK": {
             "type": "bool",
