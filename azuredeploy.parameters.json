@@ -9,7 +9,7 @@
             "value": "AzStack-H1"
         },
         "virtualMachineSize": {
-            "value": "Standard_E32s_v3"
+            "value": "Standard_E48s_v3"
         },
         "adminUsername": {
             "value": "<Username>"
