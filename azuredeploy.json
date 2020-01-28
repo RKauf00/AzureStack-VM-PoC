@@ -63,6 +63,13 @@
                 "name": "AzStack-VNET"
             }
         },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "AzStackAdmin"
+            "metadata": {
+                "name": "AzStackAdmin"
+            }
+        },
         "adminPassword": {
             "type": "securestring"
         },
@@ -199,10 +206,9 @@
         "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'), '/subnets/', parameters('subnetName'))]",
         "scriptFileName": "post-config.ps1",
-        "scriptPath": "[concat('https://raw.githubusercontent.com/yagmurs/AzureStack-VM-PoC/', parameters('branch'), '/scripts/')]",
+        "scriptPath": "[concat('https://raw.githubusercontent.com/rkauf00/AzureStack-VM-PoC/', parameters('branch'), '/scripts/')]",
         "fileUri": "[concat(variables('scriptPath'), variables('scriptFileName'))]",
-        "adminUsername": "__administrator",
-        "osDiskSizeinGB": 256,
+        "osDiskSizeinGB": 1024,
         "networkInterfaceName": "[concat(parameters('virtualMachineName'),'-NIC')]",
         "networkSecurityGroupName": "[concat(parameters('virtualMachineName'),'-NSG')]",
         "publicIpAddressName": "[concat(parameters('virtualMachineName'),'-IP')]",
@@ -222,7 +228,7 @@
             "properties": {
                 "osProfile": {
                     "computerName": "[parameters('virtualMachineName')]",
-                    "adminUsername": "[variables('adminUsername')]",
+                    "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
                     "windowsConfiguration": {
                         "provisionVmAgent": "true"
