@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "value": "westeurope"
+            "value": "usgovtexas"
         },
         "virtualMachineName": {
-            "value": "AzureStack-H1"
+            "value": "AzStack-H1"
         },
         "virtualMachineSize": {
-            "value": "Standard_E16s_v3"
+            "value": "Standard_E32s_v3"
         },
         "adminUsername": {
             "value": "<Username>"
@@ -35,20 +35,8 @@
         "publicIpAddressType": {
             "value": "Dynamic"
         },
-        "autoShutdownStatus": {
-            "value": "Enabled"
-        },
-        "autoShutdownTime": {
-            "value": "23:00"
-        },
-        "autoShutdownTimeZone": {
-            "value": "UTC"
-        },
-        "autoShutdownNotificationStatus": {
-            "value": "Disabled"
-        },
         "publicDnsName": {
-            "value": "azstacktest"
+            "value": "azstackpoc"
         }
     }
 }
