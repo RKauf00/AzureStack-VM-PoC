@@ -71,11 +71,7 @@
             }
         },
         "adminPassword": {
-            "type": "securestring",
-            "defaultValue": "D)NTu$eTH!SD#faultV@lue",
-            "metadata": {
-                "name": "D)NTu$eTH!SD#faultV@lue"
-            }
+            "type": "securestring"
         },
         "addressPrefix": {
             "type": "string",
