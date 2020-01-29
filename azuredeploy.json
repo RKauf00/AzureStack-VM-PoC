@@ -160,16 +160,16 @@
             "defaultValue": {
                 "command": "configASDK.ps1",
                 "path": "c:\\ConfigASDK",
-                "AutoRun": "false",
+                "AutoRun": "true",
                 "ASDKConfiguratorParams": {
                     "azureDirectoryTenantName": "<AzureADTenant>.onmicrosoft.com",
                     "authenticationType": "AzureAD",
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
                     "azureStackAdminPwd": "[parameters('adminPassword')]",
-                    "VMpwd": "<password>",
-                    "AzureADUsername": "<alias>@<AzureADTenant>.onmicrosoft.com",
-                    "azureAdPwd": "[parameters('adminPassword')]",
+                    "VMpwd": "[parameters('adminPassword')]",
+                    "AzureADUsername": "[parameters('AzureADGlobalAdmin')]",
+                    "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]",
                     "registerASDK": "true",
                     "useAzureCredsForRegistration":"true",
                     "azureRegSubId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
