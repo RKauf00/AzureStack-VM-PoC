@@ -1,10 +1,11 @@
 Param (
     [Parameter(Mandatory = $true)]
     [string]
-    $Username = "__administrator",
+    $Username = "AzStackAdmin",
+    #$Username = "__administrator",
 
     [string]
-    $LocalAdminUsername = "Administrator",
+    $LocalAdminUsername = "AzStackAdmin",
 
     [switch]
     $EnableDownloadASDK,
@@ -66,7 +67,6 @@ function DownloadWithRetry([string] $Uri, [string] $DownloadLocation, [int] $Ret
         }
     }
 }
-
 
 $size = Get-Volume -DriveLetter c | Get-PartitionSupportedSize
 Resize-Partition -DriveLetter c -Size $size.sizemax
