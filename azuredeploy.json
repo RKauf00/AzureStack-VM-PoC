@@ -71,7 +71,11 @@
             }
         },
         "adminPassword": {
-            "type": "securestring"
+            "type": "securestring",
+            "defaultValue": "D)NTuseD#F@ULTpa$$words",
+            "metadata": {
+                "name": "D)NTuseD#F@ULTpa$$words"
+            }
         },
         "addressPrefix": {
             "type": "string",
