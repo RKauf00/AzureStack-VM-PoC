@@ -71,7 +71,7 @@
             }
         },
         "adminPassword": {
-            "type": "securestring"
+            "type": "securestring",
             "defaultValue": "D)NTu$eD#faultV@lues",
             "metadata": {
                 "name": "10.0.0.0/24"
