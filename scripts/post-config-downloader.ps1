@@ -17,7 +17,8 @@ Param(
     # Temporary Local Administrator's username specified in the ARM template
     [Parameter(Mandatory=$true)]
     [string]
-    $Username = "__administrator",
+    $Username = "AzStackAdmin",
+    #$Username = "__administrator",
 
     # Enables downloading ASDK on the shortcut on desktop
     [Parameter(ParameterSetName="AzureImage")]
@@ -58,12 +59,13 @@ Param(
     # Parameter help description
     [Parameter()]
     [string]
-    $DNSForwarder = "8.8.8.8",
+    $DNSForwarder = "1.1.1.1",
 
     # Parameter help description
     [Parameter()]
     [string]
-    $TimeServer = "pool.ntp.org",
+    $TimeServer = "13.86.101.172",
+    #$TimeServer = "pool.ntp.org",
 
     # Parameter help description
     [Parameter()]
