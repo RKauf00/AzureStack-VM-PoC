@@ -37,6 +37,21 @@
         },
         "publicDnsName": {
             "value": "azstackpoc"
+        },
+        "autoDownloadASDK": {
+            "Value": true
+        },
+        "autoInstallASDK": {
+            "Value": true
+        },
+        "AzureADTenant": {
+            "Value": "<AzureADTenant>.onmicrosoft.com"
+        },
+        "AzureADGlobalAdmin": {
+            "Value": "<alias>@<AzureADTenant>.onmicrosoft.com"
+        },
+        "AzureADGlobalAdminPassword": {
+            "Value": "1234"
         }
     }
 }
