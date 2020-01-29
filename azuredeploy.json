@@ -72,9 +72,9 @@
         },
         "adminPassword": {
             "type": "securestring",
-            "defaultValue": "D)NTu$eD#faultV@lues",
+            "defaultValue": "D)NTu$eTH!SD#faultV@lue",
             "metadata": {
-                "name": "10.0.0.0/24"
+                "name": "D)NTu$eTH!SD#faultV@lue"
             }
         },
         "addressPrefix": {
