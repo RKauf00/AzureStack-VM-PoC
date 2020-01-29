@@ -72,6 +72,10 @@
         },
         "adminPassword": {
             "type": "securestring"
+            "defaultValue": "D)NTu$eD#faultV@lues",
+            "metadata": {
+                "name": "10.0.0.0/24"
+            }
         },
         "addressPrefix": {
             "type": "string",
@@ -162,10 +166,10 @@
                     "authenticationType": "AzureAD",
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
-                    "azureStackAdminPwd": "<password>",
+                    "azureStackAdminPwd": "[parameters('adminPassword')]",
                     "VMpwd": "<password>",
                     "AzureADUsername": "<alias>@<AzureADTenant>.onmicrosoft.com",
-                    "azureAdPwd": "<password>",
+                    "azureAdPwd": "[parameters('adminPassword')]",
                     "registerASDK": "true",
                     "useAzureCredsForRegistration":"true",
                     "azureRegSubId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
