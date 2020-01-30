@@ -2,23 +2,26 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "value": "usgovtexas"
+       "virtualMachineName": {
+             "value": "AzStackHost"
         },
-        "virtualMachineName": {
-            "value": "AzStack-H1"
-        },
-        "virtualMachineSize": {
+       "virtualMachineSize": {
             "value": "Standard_E48s_v3"
         },
-        "adminUsername": {
-            "value": "<Username>"
+        "dataDiskSizeinGB": {
+            "value": 1024
         },
-        "adminPassword": {
-            "value": "GEN-PASSWORD"
+        "dataDiskCount": {
+            "value": 8
         },
         "virtualNetworkName": {
             "value": "AzureStack-VNET"
+        },
+        "adminUsername": {
+            "value": "AzStackAdmin"
+        },
+        "adminPassword": {
+            "value": "<Password>"
         },
         "addressPrefix": {
             "value": "10.0.0.0/24"
@@ -29,14 +32,11 @@
         "subnetPrefix": {
             "value": "10.0.0.0/24"
         },
-        "publicIpAddressName": {
-            "value": "Host1-IP"
-        },
         "publicIpAddressType": {
             "value": "Dynamic"
         },
         "publicDnsName": {
-            "value": "azstackpoc"
+            "value": "azstackdev"
         },
         "autoDownloadASDK": {
             "Value": true
@@ -45,13 +45,19 @@
             "Value": true
         },
         "AzureADTenant": {
-            "Value": "<AzureADTenant>.onmicrosoft.com"
+            "Value": "<tenant>.onmicrosoft.com"
         },
         "AzureADGlobalAdmin": {
-            "Value": "<alias>@<AzureADTenant>.onmicrosoft.com"
+            "Value": "<account>@<tenant>.onmicrosoft.com"
         },
         "AzureADGlobalAdminPassword": {
-            "Value": "1234"
+            "Value": "<Password>"
+        },
+        "enableRDSH": {
+            "Value": true
+        },
+        "siteLocation": {
+            "Value": "usgovtexas"
         }
     }
 }
