@@ -410,8 +410,9 @@ if (Get-ScheduledJob -name $taskName2 -ErrorAction SilentlyContinue)
 }
 Register-ScheduledJob -ScriptBlock $taskstoCompleteUponSuccess -Name $taskName2 -Trigger $trigger -ScheduledJobOption $option
 
+$timeServiceProvider = @('51.137.137.111')
 #$timeServiceProvider = @("time.windows.com") | Get-Random
-$timeServiceProvider = @("pool.ntp.org") | Get-Random
+#$timeServiceProvider = @("pool.ntp.org") | Get-Random
 Write-Log @writeLogParams -Message "Picking random timeserver from $timeServiceProvider"
 
 if ($pocParameters.Count -gt 0) {
