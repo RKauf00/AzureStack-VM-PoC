@@ -476,7 +476,8 @@ if ($DeploymentType -eq "AAD")
         AdminPassword = $localAdminPass
         InfraAzureDirectoryTenantName = $aadTenant
         TimeServer = $timeServer
-        DNSForwarder = "8.8.8.8"
+        DNSForwarder = "1.1.1.1"
+        #DNSForwarder = "8.8.8.8"
     }
     if ($pocParameters.Count -gt 0)
     {
@@ -495,8 +496,9 @@ if ($DeploymentType -eq "ADFS")
     $global:InstallAzSPOCParams = @{
         AdminPassword = $localAdminPass
         TimeServer = $timeServer
-        DNSForwarder = "8.8.8.8"
+        DNSForwarder = "1.1.1.1"
         UseADFS = $true
+        #DNSForwarder = "8.8.8.8"
     }
     if ($pocParameters.Count -gt 0)
     {
