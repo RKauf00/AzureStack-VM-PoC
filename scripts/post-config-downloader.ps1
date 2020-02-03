@@ -108,13 +108,15 @@ function DownloadWithRetry([string] $Uri, [string] $DownloadLocation, [int] $Ret
 }
 
 $githubRepo = "AzureStack-VM-PoC"
+$githubAccount = 'rkauf00'
 $defaultLocalPath = "C:\AzureStackOnAzureVM"
 New-Item -Path $defaultLocalPath -ItemType Directory -Force
 
 
 # Enforce usage of TLSv1.2 to download the archive from GitHub
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-DownloadWithRetry -Uri "https://github.com/yagmurs/$githubRepo/archive/$GithubBranch.zip" -DownloadLocation "$defaultLocalPath\$GithubBranch.zip"
+DownloadWithRetry -Uri "https://github.com/$githubAccount/$githubRepo/archive/$GithubBranch.zip" -DownloadLocation "$defaultLocalPath\$GithubBranch.zip"
+
 
 $repoRoot = "$defaultLocalPath\$githubRepo-$GithubBranch"
 Expand-Archive -Path "$defaultLocalPath\$GithubBranch.zip" -DestinationPath $defaultLocalPath
