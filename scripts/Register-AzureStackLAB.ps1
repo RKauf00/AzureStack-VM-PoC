@@ -39,7 +39,7 @@ Import-Module $defaultLocalPath\AzureStack-Tools-master\Registration\RegisterWit
 # Register Azure Stack
 $AzureContext = Get-AzureRmContext
 $CloudAdminCred = Get-Credential -UserName AZURESTACK\CloudAdmin -Message "Enter the credentials to access the privileged endpoint."
-$RegistrationName = "yagmurs-$(New-Guid)"
+$RegistrationName = "azstack-$(New-Guid)"
 Set-AzsRegistration `
         -PrivilegedEndpointCredential $CloudAdminCred `
         -PrivilegedEndpoint AzS-ERCS01 `
