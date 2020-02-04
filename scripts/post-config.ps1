@@ -81,7 +81,7 @@ $writeLogParams = @{
     LogFilePath = $logFileFullPath
 }
 
-$branchFullPath = "https://raw.githubusercontent.com/yagmurs/AzureStack-VM-PoC/$branch"
+$branchFullPath = "https://raw.githubusercontent.com/rkauf00/AzureStack-VM-PoC/$branch"
 
 DownloadWithRetry -Uri "$branchFullPath/scripts/ASDKHelperModule.psm1" -DownloadLocation "$defaultLocalPath\ASDKHelperModule.psm1"
 DownloadWithRetry -Uri "$branchFullPath/scripts/testedVersions" -DownloadLocation "$defaultLocalPath\testedVersions"
