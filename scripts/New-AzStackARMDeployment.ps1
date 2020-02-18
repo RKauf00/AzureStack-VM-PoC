@@ -39,7 +39,7 @@
     
 # Connect Azure Account
 
-    Disconnect-AzAccount -er
+    Disconnect-AzAccount -ErrorAction SilentlyContinue
 
     if ($AzEnv)
     {
