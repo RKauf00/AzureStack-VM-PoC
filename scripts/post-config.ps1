@@ -5,7 +5,7 @@ Param (
     #$Username = "__administrator",
 
     [string]
-    $LocalAdminUsername = "AzStackAdmin",
+    $LocalAdminUsername = "AzStackLocalAdmin",
 
     [switch]
     $EnableDownloadASDK,
@@ -117,10 +117,15 @@ New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion
 
 if ($ASDKConfiguratorObject)
 {
-    $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
+    $AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
+    #$AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
     if ($?)
     {
         $ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
+        
+        ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+        $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
+        
         if (!($ASDKConfiguratorParams.downloadPath))
         {
             $ASDKConfiguratorParams.Add("downloadPath", "D:\ASDKfiles")
@@ -416,7 +421,8 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name) {
     }
 }
 
-Rename-LocalUser -Name $username -NewName Administrator
+Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
+#Rename-LocalUser -Name $username -NewName Administrator
 
 if ($AutoInstallASDK)
 {
@@ -435,8 +441,9 @@ if ($AutoInstallASDK)
     #Enable Autologon
     $AutoLogonRegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
     Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoAdminLogon" -Value "1" -type String 
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\Administrator" -type String  
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$LocalAdminPass" -type String
+    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\$($LocalAdminUsername)" -type String  
+    #Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\Administrator" -type String  
+    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$($LocalAdminPass)" -type String
     Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoLogonCount" -Value "1" -type DWord
     
     $AutoInstallASDKScriptBlock = @" 

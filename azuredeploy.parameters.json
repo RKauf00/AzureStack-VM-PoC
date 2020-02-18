@@ -21,7 +21,7 @@
             "value": "AzStackAdmin"
         },
         "adminPassword": {
-            "value": "<Password>"
+            "value": "D)NTuseD#F@ULTp@s$wordz"
         },
         "addressPrefix": {
             "value": "10.0.0.0/24"
@@ -39,25 +39,25 @@
             "value": "azstackdev"
         },
         "autoDownloadASDK": {
-            "Value": true
+            "value": true
         },
         "autoInstallASDK": {
-            "Value": true
+            "value": true
         },
         "AzureADTenant": {
-            "Value": "<tenant>.onmicrosoft.com"
+            "value": "<tenant>.onmicrosoft.com"
         },
         "AzureADGlobalAdmin": {
-            "Value": "<account>@<tenant>.onmicrosoft.com"
+            "value": "<account>@<tenant>.onmicrosoft.com"
         },
         "AzureADGlobalAdminPassword": {
-            "Value": "<Password>"
+            "value": "<Password>"
         },
         "enableRDSH": {
-            "Value": true
+            "value": true
         },
         "siteLocation": {
-            "Value": "usgovtexas"
+            "value": "usgovtexas"
         }
     }
 }
