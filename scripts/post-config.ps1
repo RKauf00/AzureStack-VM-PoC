@@ -121,6 +121,10 @@ if ($ASDKConfiguratorObject)
     #$AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
     if ($?)
     {
+        
+        ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+        $AsdkConfigurator.ASDKConfiguratorParams | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
+        
         $ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
         
         ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
@@ -421,8 +425,8 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name) {
     }
 }
 
-Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
-#Rename-LocalUser -Name $username -NewName Administrator
+#Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
+Rename-LocalUser -Name $username -NewName Administrator
 
 if ($AutoInstallASDK)
 {
@@ -441,8 +445,8 @@ if ($AutoInstallASDK)
     #Enable Autologon
     $AutoLogonRegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
     Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoAdminLogon" -Value "1" -Type String
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\$($LocalAdminUsername)" -type String
-    #Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\Administrator" -type String
+    #Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\$($LocalAdminUsername)" -type String
+    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\Administrator" -type String
     Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$($LocalAdminPass)" -Type String
     Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoLogonCount" -Value "1" -Type DWord
     

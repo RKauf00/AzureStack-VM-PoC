@@ -55,10 +55,12 @@
     }
 
 
-# Collect Azure Subscription Data
+# Set Azure Subscription
 
+    # Collect Azure Subscription Data
     $Subscription = Get-AzSubscription
 
+    # Evaluate Azure Subscription Data
     if ($Subscription.Id.Count -gt 1)
     {
         $Count             =    0
@@ -72,13 +74,14 @@
         $TenantID          =    $Subscription.TenantId
     }
 
+    # Select Azure Subscription
     Select-AzSubscription -Tenant $TenantID -Subscription $SubscriptionID
 
 
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  3                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
 
     # Set Azure Values
     [string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
@@ -115,8 +118,10 @@
 
 # Create ARM Template Parameter Object
 
+    # Purge templateParameterObject Variable
     Remove-Variable templateParameterObject -ErrorAction SilentlyContinue
 
+    # Build templateParameterObject Variable
     $templateParameterObject=@{}
     $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
     $templateParameterObject.Add("siteLocation",$siteLocation)
@@ -183,35 +188,18 @@
             -AsJob
     }
 
-    #$Count=1
-    #do
-    #{
-    #    if ($Job.State -eq 'Running')
-    #    {
-    #        Write-Host "`nStatus Check -- $($Count)`n" -ForegroundColor Cyan
-    #        Write-Host "    Job ID:    $($Job.ID)" -ForegroundColor Cyan
-    #        Write-Host "    Job State: $($Job.JobStateInfo)" -ForegroundColor Cyan
-    #        $Count++
-    #        Start-Sleep -Seconds 60
-    #    }
-    #    elseif ($Job.State -eq 'Failed')
-    #    {
-    #        Write-Host "`nStatus Check -- $($Count)`n" -ForegroundColor Red
-    #        Write-Host "    Job ID:    $($Job.ID)" -ForegroundColor Red
-    #        Write-Host "    Job State: $($Job.JobStateInfo)`n" -ForegroundColor Red
-    #        return Write-Host $Job.Error -ForegroundColor Red
-    #    }
-    #    else
-    #    {
-    #        Write-Host "`nStatus Check -- $($Count)`n" -ForegroundColor Red
-    #        Write-Host "    Job ID:    $($Job.ID)" -ForegroundColor Red
-    #        Write-Host "    Job State: $($Job.JobStateInfo)`n" -ForegroundColor Red
-    #    }
-    #}
-    #while
-    #(
-    #    $Job.State -eq 'Running'
-    #)
+
+# Open Deployment Blade in Azure Portal
+
+    if ($GovDeployment -eq $TRUE)
+    {
+        Start-Process microsoft-edge:"https://portal.azure.us/#blade/HubsExtension/DeploymentDetailsBlade/overview/id/%2Fsubscriptions%2F$($SubscriptionID)%2FresourceGroups%2F$($resourceGroupName)%2Fproviders%2FMicrosoft.Resources%2Fdeployments%2F$($resourceGroupName)-POC-Deployment"
+    }
+    else
+    {
+        Start-Process microsoft-edge:"https://portal.azure./#blade/HubsExtension/DeploymentDetailsBlade/overview/id/%2Fsubscriptions%2F$($SubscriptionID)%2FresourceGroups%2F$($resourceGroupName)%2Fproviders%2FMicrosoft.Resources%2Fdeployments%2F$($resourceGroupName)-POC-Deployment"
+    }
+
 
 # Purge Resource Group if DeploymentTest set to TRUE
 
