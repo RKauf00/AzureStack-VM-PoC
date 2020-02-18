@@ -296,6 +296,11 @@
                         "type": "CustomScriptExtension",
                         "typeHandlerVersion": "1.9",
                         "autoUpgradeMinorVersion": true,
+                        "protectedSettings": {
+                            "Items": {
+                                "adminPassword": "[parameters('adminPassword')]"
+                            }
+                        },
                         "settings": {
                             "fileUris": [
                                 "[variables('fileUri')]"
