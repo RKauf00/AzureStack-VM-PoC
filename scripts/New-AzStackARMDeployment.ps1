@@ -78,7 +78,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
 
     # Set Azure Values
     [string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"

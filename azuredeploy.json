@@ -233,11 +233,6 @@
                 "osProfile": {
                     "computerName": "[parameters('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "protectedSettings": {
-                        "Items": {
-                            "adminPassword": "[parameters('adminPassword')]"
-                        }
-                    },
                     "adminPassword": "[parameters('adminPassword')]",
                     "windowsConfiguration": {
                         "provisionVmAgent": "true"
