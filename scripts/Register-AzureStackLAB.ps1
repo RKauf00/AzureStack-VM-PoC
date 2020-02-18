@@ -12,8 +12,8 @@ Use-AzureRmProfile -Profile 2018-03-01-hybrid -Force
 Install-Module -Name AzureStack -RequiredVersion 1.5.0
 
 # Change directory to the root directory.
-cd \
-cd $defaultLocalPath
+Set-Location \
+Set-Location $defaultLocalPath
 # Enforce usage of TLSv1.2 to download the Azure Stack tools archive from GitHub
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 invoke-webrequest `
@@ -24,7 +24,7 @@ invoke-webrequest `
 expand-archive master.zip -DestinationPath . -Force
 
 # Change to the tools directory.
-cd AzureStack-Tools-master
+Set-Location AzureStack-Tools-master
 
 # Add the Azure cloud subscription environment name. 
 # Supported environment names are AzureCloud, AzureChinaCloud or AzureUSGovernment depending which Azure subscription you are using.
@@ -37,7 +37,7 @@ Register-AzureRmResourceProvider -ProviderNamespace Microsoft.AzureStack
 Import-Module $defaultLocalPath\AzureStack-Tools-master\Registration\RegisterWithAzure.psm1
 
 # Register Azure Stack
-$AzureContext = Get-AzureRmContext
+#$AzureContext = Get-AzureRmContext
 $CloudAdminCred = Get-Credential -UserName AZURESTACK\CloudAdmin -Message "Enter the credentials to access the privileged endpoint."
 $RegistrationName = "azstack-$(New-Guid)"
 Set-AzsRegistration `

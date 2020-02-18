@@ -440,16 +440,16 @@ if ($AutoInstallASDK)
 
     #Enable Autologon
     $AutoLogonRegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoAdminLogon" -Value "1" -type String 
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\$($LocalAdminUsername)" -type String  
-    #Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\Administrator" -type String  
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$($LocalAdminPass)" -type String
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoLogonCount" -Value "1" -type DWord
+    Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoAdminLogon" -Value "1" -Type String
+    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\$($LocalAdminUsername)" -type String
+    #Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\Administrator" -type String
+    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$($LocalAdminPass)" -Type String
+    Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoLogonCount" -Value "1" -Type DWord
     
     $AutoInstallASDKScriptBlock = @" 
 if ((Test-Path -Path 'D:\Azure Stack Development Kit\cloudbuilder.vhdx') -and (Test-Path -Path 'c:\CloudDeployment') -and (Test-Path -Path 'C:\CloudDeployment\Logs\Deployment.*.log'))
 {
-    Get-ScheduledTask -TaskName "$taskName3" | Disable-ScheduledTask
+    Get-ScheduledTask -TaskName "$($taskName3)" | Disable-ScheduledTask
 }
 else
 {
