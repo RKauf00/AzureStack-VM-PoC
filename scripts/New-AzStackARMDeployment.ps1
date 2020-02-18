@@ -29,7 +29,7 @@
     }
 
     [ValidateSet("development","master")] [string] $gitBranch = "master"        # GitHub branch 
-    [string] $Template = "https://raw.githubusercontent.com/RKauf00/AzureStack-VM-PoC/$gitBranch/azuredeploy.json"
+    [string] $Template = "https://raw.githubusercontent.com/RKauf00/AzureStack-VM-PoC/$($gitBranch)/azuredeploy.json"
     
     if ($UseParamObject -eq $FALSE)
     {
@@ -78,7 +78,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
 
     # Set Azure Values
     [string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
