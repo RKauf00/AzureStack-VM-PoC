@@ -128,7 +128,11 @@ if ($ASDKConfiguratorObject)
         
         ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
         New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -ItemType File -Force
-        $AsdkConfigurator.ASDKConfiguratorParams | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
+        $AsdkConfigurator | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
+        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+        $AsdkConfigurator | Get-Member | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
         
         $ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
         
@@ -148,7 +152,8 @@ if ($ASDKConfiguratorObject)
         if ($ASDKConfiguratorParams.AzureADUsername -match '<|>' -or $ASDKConfiguratorParams.azureDirectoryTenantName -match '<|>' -or $ASDKConfiguratorParams.azureStackAdminPwd -match '<|>' -or $ASDKConfiguratorParams.VMpwd -match '<|>' -or $ASDKConfiguratorParams.azureAdPwd -match '<|>')
         {
             #$AsdkConfigurator.Autorun = "false"
-            $AsdkConfigurator.Add("Autorun", "false")
+            #$AsdkConfigurator.Add("Autorun", "false")
+            $AsdkConfigurator | Add-Member -MemberType NoteProperty -Name 'Autorun' -Value 'false'
         }
 
         #create configasdk folder
@@ -442,7 +447,7 @@ Rename-LocalUser -Name $username -NewName Administrator
 New-Item -Path 'C:\Temp\pwtemp.txt' -ItemType File -Force
 $LocalAdminPass | Out-File 'C:\Temp\pwtemp.txt' -Force -ErrorAction SilentlyContinue
 
-Set-LocalUser -Name Administrator -Password $LocalAdminPass
+Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)
 
 if ($AutoInstallASDK)
 {
