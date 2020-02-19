@@ -121,8 +121,8 @@ $ASDKConfiguratorObject | Out-File 'C:\Temp\ASDKConfiguratorObject.txt' -Force -
 
 if ($ASDKConfiguratorObject)
 {
-    #$AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
-    $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
+    $AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
+    #$AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
     if ($?)
     {
         
