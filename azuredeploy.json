@@ -71,7 +71,7 @@
             }
         },
         "adminPassword": {
-            "type": "securestring",
+            "type": "string",
             "defaultValue": "D)NTuseD#F@ULTp@s$wordz",
             "metadata": {
                 "name": "D)NTuseD#F@ULTp@s$wordz"
