@@ -40,7 +40,7 @@ Param (
     [string]
     $branch = "master",
 
-    [array]
+    [string]
     $ASDKConfiguratorObject
 )
 
