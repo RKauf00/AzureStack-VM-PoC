@@ -117,17 +117,19 @@ New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion
 
 if ($ASDKConfiguratorObject)
 {
-    $AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
-    #$AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
+    #$AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
+    $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
     if ($?)
     {
         
         ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+        New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -ItemType File -Force
         $AsdkConfigurator.ASDKConfiguratorParams | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
         
         $ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
         
         ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+        New-Item -Path 'C:\Temp\ASDKConfigParams.txt' -ItemType File -Force
         $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
         
         if (!($ASDKConfiguratorParams.downloadPath))
@@ -427,6 +429,7 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name) {
 
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
+Set-LocalUser -Name Administrator -Password $LocalAdminPass
 
 if ($AutoInstallASDK)
 {
@@ -450,6 +453,7 @@ if ($AutoInstallASDK)
     Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$($LocalAdminPass)" -Type String
     Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoLogonCount" -Value "1" -Type DWord
     
+    #| ConvertTo-SecureString -AsPlainText -Force
     $AutoInstallASDKScriptBlock = @" 
 if ((Test-Path -Path 'D:\Azure Stack Development Kit\cloudbuilder.vhdx') -and (Test-Path -Path 'c:\CloudDeployment') -and (Test-Path -Path 'C:\CloudDeployment\Logs\Deployment.*.log'))
 {
@@ -457,8 +461,8 @@ if ((Test-Path -Path 'D:\Azure Stack Development Kit\cloudbuilder.vhdx') -and (T
 }
 else
 {
-    `$lPass = `'$LocalAdminPass`' | ConvertTo-SecureString -AsPlainText -Force
-    `$aadPass = `'$AzureADGlobalAdminPass`' | ConvertTo-SecureString -AsPlainText -Force
+    `$lPass = `'$LocalAdminPass`'
+    `$aadPass = `'$AzureADGlobalAdminPass`'
     `$InfraAzureDirectoryTenantAdminCredential = New-Object System.Management.Automation.PSCredential (`'$AzureADGlobalAdmin`', `$aadPass)
 
 "@

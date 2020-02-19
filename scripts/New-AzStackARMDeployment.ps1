@@ -81,7 +81,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
 
     # Set Azure Values
     [string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
@@ -108,11 +108,11 @@
     [string] $publicIpAddressType      =  'Dynamic'
 
     # Enable / Disable ASDK Auto-Download and Auto-Install
-    [bool]   $autoDownloadASDK         =  $FALSE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
-    [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
+    [bool]   $autoDownloadASDK         =  $TRUE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
+    [bool]   $autoInstallASDK          =  $TRUE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
-    [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq' #Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
+    [SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
     [SecureString] $AzureADGlobalAdminPassword  =  Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
 
 
