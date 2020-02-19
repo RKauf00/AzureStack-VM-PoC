@@ -34,13 +34,13 @@ Param (
     [string]
     $AzureADGlobalAdminPass,
 
-    [string]
+    [securestring]
     $LocalAdminPass,
 
     [string]
     $branch = "master",
 
-    [string]
+    [array]
     $ASDKConfiguratorObject
 )
 
@@ -133,8 +133,12 @@ if ($ASDKConfiguratorObject)
         $ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
         
         ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-        New-Item -Path 'C:\Temp\ASDKConfigParams.txt' -ItemType File -Force
-        $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
+        New-Item -Path 'C:\Temp\ASDKConfiguratorParams.txt' -ItemType File -Force
+        $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+        $ASDKConfiguratorParams | Get-Member | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Append -Force -ErrorAction SilentlyContinue
         
         if (!($ASDKConfiguratorParams.downloadPath))
         {
@@ -143,7 +147,7 @@ if ($ASDKConfiguratorObject)
 
         if ($ASDKConfiguratorParams.AzureADUsername -match '<|>' -or $ASDKConfiguratorParams.azureDirectoryTenantName -match '<|>' -or $ASDKConfiguratorParams.azureStackAdminPwd -match '<|>' -or $ASDKConfiguratorParams.VMpwd -match '<|>' -or $ASDKConfiguratorParams.azureAdPwd -match '<|>')
         {
-            $AsdkConfigurator.Autorun = "false"
+            #$AsdkConfigurator.Autorun = "false"
             $AsdkConfigurator.Add("Autorun", "false")
         }
 
@@ -433,6 +437,11 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name) {
 
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
+        
+## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+New-Item -Path 'C:\Temp\pwtemp.txt' -ItemType File -Force
+$LocalAdminPass | Out-File 'C:\Temp\pwtemp.txt' -Force -ErrorAction SilentlyContinue
+
 Set-LocalUser -Name Administrator -Password $LocalAdminPass
 
 if ($AutoInstallASDK)
