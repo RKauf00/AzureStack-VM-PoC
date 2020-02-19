@@ -112,7 +112,7 @@
     [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
-    [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq' #Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
+    [String] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq' #Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
     [SecureString] $AzureADGlobalAdminPassword  =  Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
 
 
