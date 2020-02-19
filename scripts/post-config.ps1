@@ -412,7 +412,7 @@ if ($null -ne $WindowsFeature.Feature.Name) {
     }
     if ($EnableRDSH) {
         Write-Log @writeLogParams -Message "User also chose to enable RDSH. Adding the Remote Desktop Session Host role"
-        Enable-WindowsOptionalFeature -FeatureName AppServer Licensing-Diagnosis-UI -Online -All -NoRestart
+        Enable-WindowsOptionalFeature -FeatureName @("AppServer", "Licensing-Diagnosis-UI") -Online -All -NoRestart
     }
 }
 

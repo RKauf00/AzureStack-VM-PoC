@@ -95,7 +95,7 @@
     [string] $virtualMachineName       =  'AzStackHost'
     [string] $virtualMachineSize       =  'Standard_E48s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024
-    [int]    $dataDiskCount            =  8
+    [int]    $dataDiskCount            =  12
     [bool]   $enableRDSH               =  $FALSE
 
     # Set Azure Networking Values
@@ -108,8 +108,8 @@
     [string] $publicIpAddressType      =  'Dynamic'
 
     # Enable / Disable ASDK Auto-Download and Auto-Install
-    [bool]   $autoDownloadASDK         =  $TRUE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
-    [bool]   $autoInstallASDK          =  $TRUE                                   # $TRUE or $FALSE
+    [bool]   $autoDownloadASDK         =  $FALSE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
+    [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
     [SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force

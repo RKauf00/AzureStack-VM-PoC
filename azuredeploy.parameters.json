@@ -9,13 +9,13 @@
             "value": "Standard_E48s_v3"
         },
         "dataDiskSizeinGB": {
-            "value": 1024
+            "value": 2048
         },
         "dataDiskCount": {
             "value": 8
         },
         "virtualNetworkName": {
-            "value": "AzureStack-VNET"
+            "value": "AzureStackVNET"
         },
         "adminUsername": {
             "value": "AzStackAdmin"
@@ -39,10 +39,10 @@
             "value": "azstackdev"
         },
         "autoDownloadASDK": {
-            "value": true
+            "value": false
         },
         "autoInstallASDK": {
-            "value": true
+            "value": false
         },
         "AzureADTenant": {
             "value": "<tenant>.onmicrosoft.com"
@@ -54,7 +54,7 @@
             "value": "<Password>"
         },
         "enableRDSH": {
-            "value": true
+            "value": false
         },
         "siteLocation": {
             "value": "usgovtexas"
