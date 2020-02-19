@@ -58,7 +58,7 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "AzStack-VNET",
+            "defaultValue": "AzStackT-VNET",
             "metadata": {
                 "name": "AzStack-VNET"
             }

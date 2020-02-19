@@ -15,7 +15,7 @@
             "value": 8
         },
         "virtualNetworkName": {
-            "value": "AzureStackVNET"
+            "value": "AzureStackP-VNET"
         },
         "adminUsername": {
             "value": "AzStackAdmin"

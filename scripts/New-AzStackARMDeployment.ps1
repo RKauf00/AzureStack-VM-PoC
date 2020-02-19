@@ -81,7 +81,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
 
     # Set Azure Values
     [string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
@@ -95,11 +95,11 @@
     [string] $virtualMachineName       =  'AzStackHost'
     [string] $virtualMachineSize       =  'Standard_E48s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024
-    [int]    $dataDiskCount            =  12
+    [int]    $dataDiskCount            =  8
     [bool]   $enableRDSH               =  $FALSE
 
     # Set Azure Networking Values
-    [string] $virtualNetworkName       =  'AzureStack-VNET'
+    [string] $virtualNetworkName       =  'AzureStackA-VNET'
     [string] $addressPrefix            =  '10.0.0.0/24'
     [string] $subnetName               =  'default'
     [string] $subnetPrefix             =  '10.0.0.0/24'
@@ -112,7 +112,7 @@
     [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
-    [SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
+    [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq' #Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
     [SecureString] $AzureADGlobalAdminPassword  =  Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
 
 
@@ -202,9 +202,9 @@
 
 
 # Purge Resource Group if DeploymentTest set to TRUE
-
-    if ($DeploymentTest -eq $TRUE)
-    {
-        Pause
-        Get-AzResourceGroup -Name $resourceGroupName | Remove-AzResourceGroup -AsJob -Force
-    }
+#
+#    if ($DeploymentTest -eq $TRUE)
+#    {
+#       Pause
+#        Get-AzResourceGroup -Name $resourceGroupName | Remove-AzResourceGroup -AsJob -Force
+#    }
