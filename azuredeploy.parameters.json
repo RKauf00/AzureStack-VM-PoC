@@ -9,7 +9,7 @@
             "value": "Standard_E48s_v3"
         },
         "dataDiskSizeinGB": {
-            "value": 2048
+            "value": 1024
         },
         "dataDiskCount": {
             "value": 8

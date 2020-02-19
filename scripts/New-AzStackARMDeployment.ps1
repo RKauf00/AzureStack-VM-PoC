@@ -81,7 +81,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
 
     # Set Azure Values
     [string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
@@ -95,7 +95,7 @@
     [string] $virtualMachineName       =  'AzStackHost'
     [string] $virtualMachineSize       =  'Standard_E48s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024
-    [int]    $dataDiskCount            =  8
+    [int]    $dataDiskCount            =  12
     [bool]   $enableRDSH               =  $FALSE
 
     # Set Azure Networking Values
@@ -109,7 +109,7 @@
 
     # Enable / Disable ASDK Auto-Download and Auto-Install
     [bool]   $autoDownloadASDK         =  $TRUE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
-    [bool]   $autoInstallASDK          =  $TRUE                                   # $TRUE or $FALSE
+    [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
     [SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
