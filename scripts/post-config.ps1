@@ -114,6 +114,10 @@ New-Item -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Interne
 New-Item -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\0' -Force
 New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3' -Name 1803 -Value 0 -PropertyType DWORD -Force
 New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\0' -Name 1803 -Value 0 -PropertyType DWORD -Force
+        
+## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+New-Item -Path 'C:\Temp\ASDKConfiguratorObject.txt' -ItemType File -Force
+$ASDKConfiguratorObject | Out-File 'C:\Temp\ASDKConfiguratorObject.txt' -Force -ErrorAction SilentlyContinue
 
 if ($ASDKConfiguratorObject)
 {
