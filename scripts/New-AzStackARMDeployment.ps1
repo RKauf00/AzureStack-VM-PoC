@@ -94,7 +94,7 @@
     [string] $adminUsername            =  'AzStackAdmin'                          # Admin User Name
     [string] $virtualMachineName       =  'AzStackHost'
     [string] $virtualMachineSize       =  'Standard_E48s_v3'                      # v1811+ requires 256GB RAM
-    [int]    $dataDiskSizeinGB         =  1024
+    [int]    $dataDiskSizeinGB         =  2048
     [int]    $dataDiskCount            =  12
     [bool]   $enableRDSH               =  $FALSE
 

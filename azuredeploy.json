@@ -31,7 +31,8 @@
             "allowedValues": [
                 256,
                 512,
-                1024
+                1024,
+                2048
             ],
             "defaultValue": 1024,
             "metadata": {
