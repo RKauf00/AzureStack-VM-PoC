@@ -92,7 +92,7 @@
 
     # Set Azure VM Values
     [string] $adminUsername            =  'AzStackAdmin'                          # Admin User Name
-    [string] $virtualMachineName       =  'AzSH0st'
+    [string] $virtualMachineName       =  'AzStackHost'
     [string] $virtualMachineSize       =  'Standard_E48s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024
     [int]    $dataDiskCount            =  8

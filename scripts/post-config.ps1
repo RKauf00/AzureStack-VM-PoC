@@ -115,35 +115,61 @@ New-Item -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Interne
 New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3' -Name 1803 -Value 0 -PropertyType DWORD -Force
 New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\0' -Name 1803 -Value 0 -PropertyType DWORD -Force
         
-## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-New-Item -Path 'C:\Temp\ASDKConfiguratorObject.txt' -ItemType File -Force
-$ASDKConfiguratorObject | Out-File 'C:\Temp\ASDKConfiguratorObject.txt' -Force -ErrorAction SilentlyContinue
+<#----#>
+<#----#>
+<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorObject.txt' -ItemType File -Force
+<#----#>                                $ASDKConfiguratorObject | Out-File 'C:\Temp\ASDKConfiguratorObject.txt' -Force -ErrorAction SilentlyContinue
+<#----#>
+<#----#>
+        
+<#----#>
+<#----#>
+<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorObject_jsonconvert.txt' -ItemType File -Force
+<#----#>                                ConvertFrom-Json $ASDKConfiguratorObject | Out-File 'C:\Temp\ASDKConfiguratorObject_jsonconvert.txt' -Force -ErrorAction SilentlyContinue
+<#----#>
+<#----#>
 
 if ($ASDKConfiguratorObject)
 {
-    $AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
+    $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject
+    #$AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
     #$AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
+
     if ($?)
     {
         
-        ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-        New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -ItemType File -Force
-        $AsdkConfigurator | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
-        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-        $AsdkConfigurator | Get-Member | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -Force -ErrorAction SilentlyContinue
-        
+<#----#>
+<#----#>
+<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -ItemType File -Force
+<#----#>                                $AsdkConfigurator | Out-File 'C:\Temp\AsdkConfigurator.txt' -Force -ErrorAction SilentlyContinue
+<#----#>
+<#----#>
+
+<#----#>
+<#----#>
+<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfiguratorParams.txt' -ItemType File -Force
+<#----#>                                $AsdkConfigurator.ASDKConfiguratorParams | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>
+<#----#>
+       
         $ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
-        
-        ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-        New-Item -Path 'C:\Temp\ASDKConfiguratorParams.txt' -ItemType File -Force
-        $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-        "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-        $ASDKConfiguratorParams | Get-Member | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Append -Force -ErrorAction SilentlyContinue
-        
+
+<#----#>
+<#----#>
+<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorParams.txt' -ItemType File -Force
+<#----#>                                $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                $ASDKConfiguratorParams | Get-Member | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Append -Force -ErrorAction SilentlyContinue
+<#----#>
+<#----#>
+
         if (!($ASDKConfiguratorParams.downloadPath))
         {
             $ASDKConfiguratorParams.Add("downloadPath", "D:\ASDKfiles")
@@ -441,13 +467,13 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name) {
 
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
-        
-## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-New-Item -Path 'C:\Temp\pwtemp.txt' -ItemType File -Force
-$LocalAdminPass | Out-File 'C:\Temp\pwtemp.txt' -Force -ErrorAction SilentlyContinue
 
-## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-Set-LocalUser -Name Administrator -Password $('*W^Ma03,k.u^49)6cq' | ConvertTo-SecureString -AsPlainText -Force)
+<#----#>
+<#----#>
+<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                Set-LocalUser -Name Administrator -Password $('*W^Ma03,k.u^49)6cq' | ConvertTo-SecureString -AsPlainText -Force)
+<#----#>
+<#----#>
 
 if ($AutoInstallASDK)
 {
