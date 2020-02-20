@@ -163,7 +163,7 @@
                 "path": "c:\\ConfigASDK",
                 "AutoRun": "true",
                 "ASDKConfiguratorParams": {
-                    "azureDirectoryTenantName": "<AzureADTenant>.onmicrosoft.com",
+                    "azureDirectoryTenantName": "[parameters('AzureADTenant')]",
                     "authenticationType": "AzureAD",
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",

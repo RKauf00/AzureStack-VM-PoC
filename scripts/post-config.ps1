@@ -34,7 +34,7 @@ Param (
     [string]
     $AzureADGlobalAdminPass,
 
-    [securestring]
+    [string]
     $LocalAdminPass,
 
     [string]
@@ -151,9 +151,8 @@ if ($ASDKConfiguratorObject)
 
         if ($ASDKConfiguratorParams.AzureADUsername -match '<|>' -or $ASDKConfiguratorParams.azureDirectoryTenantName -match '<|>' -or $ASDKConfiguratorParams.azureStackAdminPwd -match '<|>' -or $ASDKConfiguratorParams.VMpwd -match '<|>' -or $ASDKConfiguratorParams.azureAdPwd -match '<|>')
         {
-            #$AsdkConfigurator.Autorun = "false"
+            $AsdkConfigurator.Autorun = "false"
             #$AsdkConfigurator.Add("Autorun", "false")
-            $AsdkConfigurator | Add-Member -MemberType NoteProperty -Name 'Autorun' -Value 'false'
         }
 
         #create configasdk folder
@@ -447,7 +446,8 @@ Rename-LocalUser -Name $username -NewName Administrator
 New-Item -Path 'C:\Temp\pwtemp.txt' -ItemType File -Force
 $LocalAdminPass | Out-File 'C:\Temp\pwtemp.txt' -Force -ErrorAction SilentlyContinue
 
-Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)
+## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+Set-LocalUser -Name Administrator -Password $('*W^Ma03,k.u^49)6cq' | ConvertTo-SecureString -AsPlainText -Force)
 
 if ($AutoInstallASDK)
 {
