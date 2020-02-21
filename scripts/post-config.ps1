@@ -127,15 +127,14 @@ New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion
 <#----#>
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
 <#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorObject_jsonconvert.txt' -ItemType File -Force
-<#----#>                                ConvertFrom-Json $ASDKConfiguratorObject | Out-File 'C:\Temp\ASDKConfiguratorObject_jsonconvert.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                $Test = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
+<#----#>                                $Test.ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorObject_jsonconvert.txt' -Force -ErrorAction SilentlyContinue
 <#----#>
 <#----#>
 
 if ($ASDKConfiguratorObject)
 {
-    $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject
-    #$AsdkConfigurator = $ASDKConfiguratorObject | ConvertFrom-Json
-    #$AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
+    $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
 
     if ($?)
     {
@@ -152,47 +151,20 @@ if ($ASDKConfiguratorObject)
 <#----#>
 <#----#>
 
-        if (!(Get-Module 'ASDKHelperModule'))
-        {
-            New-Item -Path 'C:\Temp\LoadingModule.txt' -ItemType File -Force
-            'Loading ASDKHelperModule.psm1' | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
-
-            Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
-
-            '...loaded' | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
-        }
-        else
-        {
-            New-Item -Path 'C:\Temp\ModuleLoaded.txt' -ItemType File -Force
-            'ASDKHelperModule.psm1 loaded' | Out-File 'C:\Temp\ModuleLoaded.txt' -Force -ErrorAction SilentlyContinue
-        }
-
-        try
-        {
-            New-Item -Path 'C:\Temp\ConvertToHashAttempt.txt' -ItemType File -Force
-            $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\ConvertToHashAttempt.txt' -Force -ErrorAction SilentlyContinue
-
             $ASDKConfiguratorParams = $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject
             #$ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
 
-        }
-        catch
-        {
-            New-Item -Path 'C:\Temp\ConvertToHashError.txt' -ItemType File -Force
-            $StackTrace | Select * | Out-File 'C:\Temp\ConvertToHashError.txt' -Force -ErrorAction SilentlyContinue
-        }
-
-<#----#>
-<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                if (!(Get-Variable ASDKConfiguratorParams))
-<#----#>                                {
-<#----#>                                    New-Item -Path 'C:\Temp\ASDKConfiguratorParams_IsNull.txt' -ItemType File -Force
-<#----#>                                    'TRUE' | Out-File 'C:\Temp\ASDKConfiguratorParams_IsNull.txt' -Force -ErrorAction SilentlyContinue
-<#----#>                                }
 <#----#>
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
 <#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorParams.txt' -ItemType File -Force
-<#----#>                                $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                if (!(Get-Variable ASDKConfiguratorParams))
+<#----#>                                {
+<#----#>                                    'IS NULL' | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                }
+<#----#>                                else
+<#----#>                                {
+<#----#>                                    $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                }
 <#----#>
 
         if (!($ASDKConfiguratorParams.downloadPath))

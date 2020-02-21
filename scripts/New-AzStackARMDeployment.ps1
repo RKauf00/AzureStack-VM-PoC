@@ -81,7 +81,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
 
     # Set Azure Values
     [string] $AzureADTenant            =  'Azure-Stack.us' #Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
@@ -96,7 +96,7 @@
     [string] $virtualMachineSize       =  'Standard_E48s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024
     [int]    $dataDiskCount            =  8
-    [bool]   $enableRDSH               =  $FALSE
+    [bool]   $enableRDSH               =  $TRUE
 
     # Set Azure Networking Values
     [string] $virtualNetworkName       =  'AzureStack-VNET'
@@ -108,7 +108,7 @@
     [string] $publicIpAddressType      =  'Dynamic'
 
     # Enable / Disable ASDK Auto-Download and Auto-Install
-    [bool]   $autoDownloadASDK         =  $TRUE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
+    [bool]   $autoDownloadASDK         =  $FALSE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
     [bool]   $autoInstallASDK          =  $FALSE                                  # $TRUE or $FALSE
 
     # Set Administrator Passwords
