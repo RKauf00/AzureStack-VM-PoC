@@ -146,19 +146,43 @@ if ($ASDKConfiguratorObject)
 <#----#>                                New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -ItemType File -Force
 <#----#>                                $AsdkConfigurator | Out-File 'C:\Temp\AsdkConfigurator.txt' -Force -ErrorAction SilentlyContinue
 <#----#>
-<#----#>
-
-<#----#>
-<#----#>
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
 <#----#>                                New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfiguratorParams.txt' -ItemType File -Force
 <#----#>                                $AsdkConfigurator.ASDKConfiguratorParams | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
 <#----#>
 <#----#>
-       
-        $ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
+
+        if (!(Get-Module 'ASDKHelperModule'))
+        {
+            Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
+        }
+        else
+        {
+            throw "required module $defaultLocalPath\ASDKHelperModule.psm1 not found"   
+        }
+
+        try
+        {
+            New-Item -Path 'C:\Temp\ConvertToHashAttempt.txt' -ItemType File -Force
+            $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\ConvertToHashAttempt.txt' -Force -ErrorAction SilentlyContinue
+
+            $ASDKConfiguratorParams = $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject
+            #$ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
+
+        }
+        catch
+        {
+            New-Item -Path 'C:\Temp\ConvertToHashError.txt' -ItemType File -Force
+            $StackTrace | Select * | Out-File 'C:\Temp\ConvertToHashError.txt' -Force -ErrorAction SilentlyContinue
+        }
 
 <#----#>
+<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                if (!(Get-Variable ASDKConfiguratorParams))
+<#----#>                                {
+<#----#>                                    New-Item -Path 'C:\Temp\ASDKConfiguratorParams_IsNull.txt' -ItemType File -Force
+<#----#>                                    'TRUE' | Out-File 'C:\Temp\ASDKConfiguratorParams_IsNull.txt' -Force -ErrorAction SilentlyContinue
+<#----#>                                }
 <#----#>
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
 <#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorParams.txt' -ItemType File -Force
