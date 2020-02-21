@@ -154,11 +154,17 @@ if ($ASDKConfiguratorObject)
 
         if (!(Get-Module 'ASDKHelperModule'))
         {
+            New-Item -Path 'C:\Temp\LoadingModule.txt' -ItemType File -Force
+            'Loading ASDKHelperModule.psm1' | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
+
             Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
+
+            '...loaded' | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
         }
         else
         {
-            throw "required module $defaultLocalPath\ASDKHelperModule.psm1 not found"   
+            New-Item -Path 'C:\Temp\ModuleLoaded.txt' -ItemType File -Force
+            'ASDKHelperModule.psm1 loaded' | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\ModuleLoaded.txt' -Force -ErrorAction SilentlyContinue
         }
 
         try
