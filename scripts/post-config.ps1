@@ -152,40 +152,19 @@ if ($ASDKConfiguratorObject)
 <#----#>
 <#----#>
 
-function ConvertTo-HashtableFromPsCustomObject { 
-    param ( 
-        [Parameter(  
-            Position = 0,   
-            Mandatory = $true,   
-            ValueFromPipeline = $true,  
-            ValueFromPipelineByPropertyName = $true  
-        )] [object[]]$psCustomObject 
-    ); 
-    
-    process { 
-        foreach ($myPsObject in $psCustomObject) { 
-            $output = @{}; 
-            $myPsObject | Get-Member -MemberType *Property | % { 
-                $output.($_.name) = $myPsObject.($_.name); 
-            } 
-            $output; 
-        } 
-    } 
-}
-
         if (!(Get-Module 'ASDKHelperModule'))
         {
             New-Item -Path 'C:\Temp\LoadingModule.txt' -ItemType File -Force
-            'Loading ASDKHelperModule.psm1' | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
+            'Loading ASDKHelperModule.psm1' | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
 
             Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
 
-            '...loaded' | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
+            '...loaded' | Out-File 'C:\Temp\LoadingModule.txt' -Force -ErrorAction SilentlyContinue
         }
         else
         {
             New-Item -Path 'C:\Temp\ModuleLoaded.txt' -ItemType File -Force
-            'ASDKHelperModule.psm1 loaded' | ConvertTo-HashtableFromPsCustomObject | Out-File 'C:\Temp\ModuleLoaded.txt' -Force -ErrorAction SilentlyContinue
+            'ASDKHelperModule.psm1 loaded' | Out-File 'C:\Temp\ModuleLoaded.txt' -Force -ErrorAction SilentlyContinue
         }
 
         try
@@ -214,11 +193,6 @@ function ConvertTo-HashtableFromPsCustomObject {
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
 <#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorParams.txt' -ItemType File -Force
 <#----#>                                $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-<#----#>                                "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-<#----#>                                "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-<#----#>                                "" | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-<#----#>                                $ASDKConfiguratorParams | Get-Member | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Append -Force -ErrorAction SilentlyContinue
-<#----#>
 <#----#>
 
         if (!($ASDKConfiguratorParams.downloadPath))
