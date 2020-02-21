@@ -152,6 +152,27 @@ if ($ASDKConfiguratorObject)
 <#----#>
 <#----#>
 
+function ConvertTo-HashtableFromPsCustomObject { 
+    param ( 
+        [Parameter(  
+            Position = 0,   
+            Mandatory = $true,   
+            ValueFromPipeline = $true,  
+            ValueFromPipelineByPropertyName = $true  
+        )] [object[]]$psCustomObject 
+    ); 
+    
+    process { 
+        foreach ($myPsObject in $psCustomObject) { 
+            $output = @{}; 
+            $myPsObject | Get-Member -MemberType *Property | % { 
+                $output.($_.name) = $myPsObject.($_.name); 
+            } 
+            $output; 
+        } 
+    } 
+}
+
         if (!(Get-Module 'ASDKHelperModule'))
         {
             New-Item -Path 'C:\Temp\LoadingModule.txt' -ItemType File -Force
