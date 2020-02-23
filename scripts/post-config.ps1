@@ -362,7 +362,22 @@ if ($AzureImage) {
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -Version $latestASDK}"
                 $Shortcut.Save()
             }
-            else {
+            else
+            {
+
+        <#----#>
+    <#----#>
+<#----#>
+                $WshShell = New-Object -comObject WScript.Shell
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\_AAD_Install-ASDK_Latest.lnk")
+                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+                $Shortcut.WorkingDirectory = "$defaultLocalPath"
+                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD- AADTenant $($AzureADTenant) -LocalAdminPass $($LocalAdminPass) -DownloadASDK -Version latest}"
+                $Shortcut.Save()
+<#----#>
+    <#----#>
+        <#----#>
+
                 $WshShell = New-Object -comObject WScript.Shell
                 $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
@@ -455,7 +470,6 @@ if ($AutoInstallASDK)
     Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$($LocalAdminPass)" -Type String
     Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoLogonCount" -Value "1" -Type DWord
     
-    #| ConvertTo-SecureString -AsPlainText -Force
     $AutoInstallASDKScriptBlock = @" 
 if ((Test-Path -Path 'D:\Azure Stack Development Kit\cloudbuilder.vhdx') -and (Test-Path -Path 'c:\CloudDeployment') -and (Test-Path -Path 'C:\CloudDeployment\Logs\Deployment.*.log'))
 {
@@ -468,6 +482,7 @@ else
     `$InfraAzureDirectoryTenantAdminCredential = New-Object System.Management.Automation.PSCredential (`'$AzureADGlobalAdmin`', `$aadPass)
 
 "@
+
 if ($ASDKImage)
 {
     $AutoInstallASDKScriptBlock += @" 
@@ -504,11 +519,14 @@ $AutoInstallASDKScriptBlock += @"
         Settings = New-ScheduledTaskSettingsSet -Priority 4
         Force = $true
     }
-    $registrationParams.Trigger = New-ScheduledTaskTrigger -AtLogOn
+    #$registrationParams.Trigger = New-ScheduledTaskTrigger -AtLogOn
+    $registrationParams.Trigger = New-ScheduledTaskTrigger -AtStartup
     $registrationParams.User = "$($env:ComputerName)\Administrator"
     $registrationParams.RunLevel = 'Highest'
 
     Register-ScheduledTask @registrationParams
 }
+
 Stop-Transcript
+
 Restart-Computer -Force
