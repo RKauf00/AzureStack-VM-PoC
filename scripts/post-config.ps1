@@ -334,6 +334,20 @@ if ($AzureImage) {
         {
             #Creating desktop shortcut for Install-ASDK.ps1
             if ($EnableDownloadASDK) {
+
+        <#----#>
+    <#----#>
+<#----#>
+                $WshShell = New-Object -comObject WScript.Shell
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_LatestVer_Install-ASDK.lnk")
+                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+                $Shortcut.WorkingDirectory = "$defaultLocalPath"
+                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType AAD -AADTenant $($AzureADTenant) -Version latest}"
+                $Shortcut.Save()
+<#----#>
+    <#----#>
+        <#----#>
+
                 $WshShell = New-Object -comObject WScript.Shell
                 $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
@@ -364,20 +378,6 @@ if ($AzureImage) {
             }
             else
             {
-
-        <#----#>
-    <#----#>
-<#----#>
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\_AAD_Install-ASDK_Latest.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD- AADTenant $($AzureADTenant) -LocalAdminPass $($LocalAdminPass) -DownloadASDK -Version latest}"
-                $Shortcut.Save()
-<#----#>
-    <#----#>
-        <#----#>
-
                 $WshShell = New-Object -comObject WScript.Shell
                 $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
