@@ -81,7 +81,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  3                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
