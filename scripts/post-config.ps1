@@ -115,23 +115,6 @@ New-Item -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Interne
 New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3' -Name 1803 -Value 0 -PropertyType DWORD -Force
 New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\0' -Name 1803 -Value 0 -PropertyType DWORD -Force
         
-<#----#>
-<#----#>
-<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorObject.txt' -ItemType File -Force
-<#----#>                                $ASDKConfiguratorObject | Out-File 'C:\Temp\ASDKConfiguratorObject.txt' -Force -ErrorAction SilentlyContinue
-<#----#>
-<#----#>
-        
-<#----#>
-<#----#>
-<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorObject_jsonconvert.txt' -ItemType File -Force
-<#----#>                                $Test = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
-<#----#>                                $Test.ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorObject_jsonconvert.txt' -Force -ErrorAction SilentlyContinue
-<#----#>
-<#----#>
-
 if ($ASDKConfiguratorObject)
 {
     $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
@@ -139,33 +122,7 @@ if ($ASDKConfiguratorObject)
     if ($?)
     {
         
-<#----#>
-<#----#>
-<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfigParams.txt' -ItemType File -Force
-<#----#>                                $AsdkConfigurator | Out-File 'C:\Temp\AsdkConfigurator.txt' -Force -ErrorAction SilentlyContinue
-<#----#>
-<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                New-Item -Path 'C:\Temp\AsdkConfigurator_ASDKConfiguratorParams.txt' -ItemType File -Force
-<#----#>                                $AsdkConfigurator.ASDKConfiguratorParams | Out-File 'C:\Temp\AsdkConfigurator_ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-<#----#>
-<#----#>
-
-            $ASDKConfiguratorParams = $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject
-            #$ASDKConfiguratorParams = ConvertTo-HashtableFromPsCustomObject $AsdkConfigurator.ASDKConfiguratorParams
-
-<#----#>
-<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                New-Item -Path 'C:\Temp\ASDKConfiguratorParams.txt' -ItemType File -Force
-<#----#>                                if (!(Get-Variable ASDKConfiguratorParams))
-<#----#>                                {
-<#----#>                                    'IS NULL' | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-<#----#>                                }
-<#----#>                                else
-<#----#>                                {
-<#----#>                                    $ASDKConfiguratorParams | Out-File 'C:\Temp\ASDKConfiguratorParams.txt' -Force -ErrorAction SilentlyContinue
-<#----#>                                }
-<#----#>
+        $ASDKConfiguratorParams = $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject
 
         if (!($ASDKConfiguratorParams.downloadPath))
         {
@@ -465,12 +422,16 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name) {
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
 
+        <#----#>
+    <#----#>
 <#----#>
 <#----#>
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
 <#----#>                                Set-LocalUser -Name Administrator -Password $('*W^Ma03,k.u^49)6cq' | ConvertTo-SecureString -AsPlainText -Force)
 <#----#>
 <#----#>
+    <#----#>
+        <#----#>
 
 if ($AutoInstallASDK)
 {
