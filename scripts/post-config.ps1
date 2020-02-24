@@ -74,7 +74,7 @@ function DownloadWithRetry([string] $Uri, [string] $DownloadLocation, [int] $Ret
     }
 }
 
-$LocalAdminPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass)) | ConvertTo-SecureString -AsPlainText -Force
+$LocalAdminPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass))
 
 $size = Get-Volume -DriveLetter c | Get-PartitionSupportedSize
 Resize-Partition -DriveLetter c -Size $size.sizemax
@@ -491,7 +491,10 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
-Set-LocalUser -Name Administrator -Password $($LocalAdminPass)
+Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)
+
+$LocalAdminPass | Out-File 'C:\Temp\pwdTest.txt' -Force
+
         <#----#>
     <#----#>
 <#----#>
