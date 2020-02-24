@@ -493,6 +493,7 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 Rename-LocalUser -Name $username -NewName Administrator
 Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)
 
+New-Item -Path 'C:\Temp\pwdTest.txt' -ItemType File
 $LocalAdminPass | Out-File 'C:\Temp\pwdTest.txt' -Force
 
         <#----#>
