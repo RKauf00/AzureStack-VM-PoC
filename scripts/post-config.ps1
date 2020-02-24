@@ -76,6 +76,11 @@ function DownloadWithRetry([string] $Uri, [string] $DownloadLocation, [int] $Ret
 
 $LocalAdminPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass))
 
+New-Item -Path 'C:\Temp' -ItemType Directory -Force
+New-Item -Path 'C:\Temp\pwdTest.txt' -ItemType File
+$LocalAdminPass | Out-File 'C:\Temp\pwdTest.txt' -Force
+$LocalAdminPass | GM | Out-File 'C:\Temp\pwdTest.txt' -Append
+
 $size = Get-Volume -DriveLetter c | Get-PartitionSupportedSize
 Resize-Partition -DriveLetter c -Size $size.sizemax
 
@@ -461,6 +466,7 @@ DownloadWithRetry -Uri "$branchFullPath/scripts/OneNodeRole.xml" -DownloadLocati
 [xml]$rolesXML = Get-Content -Path "$defaultLocalPath\OneNodeRole.xml" -Raw
 $WindowsFeature = $rolesXML.role.PublicInfo.WindowsFeature
 $dismFeatures = (Get-WindowsOptionalFeature -Online).FeatureName
+
 if ($null -ne $WindowsFeature.Feature.Name)
 {
     $featuresToInstall = $dismFeatures | Where-Object { $_ -in $WindowsFeature.Feature.Name }
@@ -492,10 +498,6 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
 Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)
-
-New-Item -Path 'C:\Temp\pwdTest.txt' -ItemType File
-$LocalAdminPass | Out-File 'C:\Temp\pwdTest.txt' -Force
-$LocalAdminPass | GM | Out-File 'C:\Temp\pwdTest.txt' -Append
 
         <#----#>
     <#----#>
