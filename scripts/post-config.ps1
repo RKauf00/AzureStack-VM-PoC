@@ -491,13 +491,13 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
-
+Set-LocalUser -Name Administrator -Password $($LocalAdminPass)
         <#----#>
     <#----#>
 <#----#>
 <#----#>
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                Set-LocalUser -Name Administrator -Password $($LocalAdminPass)
+<#----#>                                #Set-LocalUser -Name Administrator -Password $($LocalAdminPass)
 <#----#>                                #Set-LocalUser -Name Administrator -Password $('*W^Ma03,k.u^49)6cq' | ConvertTo-SecureString -AsPlainText -Force)
 <#----#>
 <#----#>

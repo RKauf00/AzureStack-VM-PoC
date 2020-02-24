@@ -157,7 +157,7 @@
     [string] $publicIpAddressType      =  'Dynamic'
 
     # Enable / Disable ASDK Auto-Download and Auto-Install
-    [bool]   $autoDownloadASDK         =  $TRUE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
+    [bool]   $autoDownloadASDK         =  $FALSE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
     [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
@@ -167,8 +167,8 @@
         <#----#>
     <#----#>
 <#----#>
-<#----#>            [String] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force #Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
-<#----#>            [String] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO'  | ConvertTo-SecureString -AsPlainText -Force #Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [String] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [String] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO'  | ConvertTo-SecureString -AsPlainText -Force
 <#----#>
     <#----#>
         <#----#>

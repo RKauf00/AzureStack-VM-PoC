@@ -40,7 +40,6 @@
         "dataDiskCount": {
             "type": "int",
             "allowedValues": [
-                3,
                 4,
                 8,
                 12,
