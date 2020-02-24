@@ -34,7 +34,7 @@ Param (
     [string]
     $AzureADGlobalAdminPass,
 
-    [string]
+    #[string]
     $LocalAdminPass,
 
     [string]
@@ -495,6 +495,7 @@ Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-Secure
 
 New-Item -Path 'C:\Temp\pwdTest.txt' -ItemType File
 $LocalAdminPass | Out-File 'C:\Temp\pwdTest.txt' -Force
+$LocalAdminPass | GM | Out-File 'C:\Temp\pwdTest.txt' -Append
 
         <#----#>
     <#----#>

@@ -42,7 +42,6 @@
 
 # Script Parameters
 
-    [bool] $DeploymentTest = $FALSE    # $TRUE deletes resource group post deployment
     [bool] $UseParamObject = $TRUE
     
     [bool] $GovDeployment  = $TRUE
@@ -111,7 +110,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  7                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -257,12 +256,3 @@
     {
         Start-Process microsoft-edge:"https://portal.azure./#blade/HubsExtension/DeploymentDetailsBlade/overview/id/%2Fsubscriptions%2F$($SubscriptionID)%2FresourceGroups%2F$($resourceGroupName)%2Fproviders%2FMicrosoft.Resources%2Fdeployments%2F$($resourceGroupName)-POC-Deployment"
     }
-
-
-# Purge Resource Group if DeploymentTest set to TRUE
-#
-#    if ($DeploymentTest -eq $TRUE)
-#    {
-#       Pause
-#        Get-AzResourceGroup -Name $resourceGroupName | Remove-AzResourceGroup -AsJob -Force
-#    }
