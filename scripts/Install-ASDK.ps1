@@ -52,8 +52,8 @@ $localCredValidated = $false
 if (!($LocalAdminPass))
 {
     do {
-    $localAdminPass = Read-Host -Prompt "Enter password for the user `'Administrator`'" -AsSecureString
-    $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
+        $localAdminPass = Read-Host -Prompt "Enter password for the user `'Administrator`'" -AsSecureString
+        $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
         if ($DS.ValidateCredentials($LocalAdminUsername, $adminPass_text) -eq $true)
         {
             $localCredValidated =  $true

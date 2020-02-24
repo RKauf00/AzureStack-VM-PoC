@@ -1,16 +1,46 @@
 
-    # Notes
+# Notes
+
     #
-    #   Azure Region must host E and D VM sizes supporting nested virtualization (Confirmed:usgovtexas and East US2)
+    #   Azure Region must host E and D VM sizes supporting nested virtualization (Confirmed: Commercial - EastUS2 | US Gov - USGovTexas)
     #
+    #   VM Sizing for ASDK 1910:
     #
+    #       Reference: https://docs.microsoft.com/en-us/azure-stack/asdk/asdk-deploy-considerations?view=azs-1910
+    #
+    #       CPU:       Minimum - 16 Cores     Recommended - 20 Cores
+    #       Memory:    Minimum - 192GB        Recommended - 256GB
+    #
+    #       Recommended VM Size
+    #
+    #           Standard_E32s_v3    |   32C/256GB
+    #
+    #       VM Sizes (Minimum Requirements)
+    #
+    #           Standard_D48s_v3    |   48C/192GB
+    #           Standard_E32-16s_v3 |   16C/256GB
+    #           Standard_E64-16s_v3 |   16C/432GB
+    #
+    #       VM Sizes (Exceeds Requirements)
+    #
+    #          Standard_D64s_v3    |   64C/256GB
+    #          Standard_E48s_v3    |   48C/384GB
+    #          Standard_E64-32s_v3 |   32C/432GB
+    #          Standard_E64s_v3    |   64C/432GB
+    #
+    #       Tested VM Sizes
+    #
+    #           Standard_E32s_v3
+    #           Standard_E48s_v3
     #
 
-    # Script Parameters
+
+# Import Module(s)
 
     Import-Module AZ
 
-    # Script Parameters
+
+# Script Parameters
 
     [bool] $DeploymentTest = $FALSE    # $TRUE deletes resource group post deployment
     [bool] $UseParamObject = $TRUE
@@ -81,7 +111,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  4                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -112,7 +142,7 @@
     # Set Azure VM Values
     [string] $adminUsername            =  'AzStackAdmin'                          # Admin User Name
     [string] $virtualMachineName       =  'AzStackHost'
-    [string] $virtualMachineSize       =  'Standard_E48s_v3'                      # v1811+ requires 256GB RAM
+    [string] $virtualMachineSize       =  'Standard_E32s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024
     [int]    $dataDiskCount            =  8
     [bool]   $enableRDSH               =  $TRUE

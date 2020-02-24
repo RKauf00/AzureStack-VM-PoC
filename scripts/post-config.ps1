@@ -497,6 +497,7 @@ Rename-LocalUser -Name $username -NewName Administrator
 <#----#>
 <#----#>
 <#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
+<#----#>                                Set-LocalUser -Name Administrator -Password $($LocalAdminPass)
 <#----#>                                #Set-LocalUser -Name Administrator -Password $('*W^Ma03,k.u^49)6cq' | ConvertTo-SecureString -AsPlainText -Force)
 <#----#>
 <#----#>
