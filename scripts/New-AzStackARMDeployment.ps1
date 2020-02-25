@@ -180,10 +180,10 @@
 
     # Build templateParameterObject Variable
     $templateParameterObject=@{}
-    $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
+    $templateParameterObject.Add("AzureADTenant",$($AzureADTenant | ConvertTo-SecureString -AsPlainText -Force))
     $templateParameterObject.Add("siteLocation",$siteLocation)
-    $templateParameterObject.Add("AzureADGlobalAdmin",$AzureADGlobalAdmin)
-    $templateParameterObject.Add("adminUsername",$adminUsername)
+    $templateParameterObject.Add("AzureADGlobalAdmin",$($AzureADGlobalAdmin | ConvertTo-SecureString -AsPlainText -Force))
+    $templateParameterObject.Add("adminUsername",$($adminUsername | ConvertTo-SecureString -AsPlainText -Force))
     $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
     $templateParameterObject.Add("virtualMachineName",$virtualMachineName)
     $templateParameterObject.Add("virtualMachineSize",$virtualMachineSize)
