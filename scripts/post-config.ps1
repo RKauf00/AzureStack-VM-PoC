@@ -516,7 +516,7 @@ if (!($LocalAdminPass))
 
 if (!($LocalAdminPass))
 {
-        $LocalAdminPass = $ASDKConfiguratorParams.localpw
+        $LocalAdminPass = $ASDKConfiguratorParams.localpw | ConvertTo-SecureString -AsPlainText -Force
         $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
         if ($DS.ValidateCredentials('Administrator', $adminPass_text) -eq $true)
         {
