@@ -34,7 +34,7 @@ Param (
     [string]
     $AzureADGlobalAdminPass,
 
-    #[string]
+    [string]
     $LocalAdminPass,
 
     [string]
@@ -74,12 +74,7 @@ function DownloadWithRetry([string] $Uri, [string] $DownloadLocation, [int] $Ret
     }
 }
 
-$LocalAdminPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass))
-
-New-Item -Path 'C:\Temp' -ItemType Directory -Force
-New-Item -Path 'C:\Temp\pwdTest.txt' -ItemType File
-$LocalAdminPass | Out-File 'C:\Temp\pwdTest.txt' -Force
-$LocalAdminPass | GM | Out-File 'C:\Temp\pwdTest.txt' -Append
+#$LocalAdminPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass))
 
 $size = Get-Volume -DriveLetter c | Get-PartitionSupportedSize
 Resize-Partition -DriveLetter c -Size $size.sizemax
@@ -134,6 +129,9 @@ New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion
 if ($ASDKConfiguratorObject)
 {
     $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
+
+    New-Item -Path 'C:\Temp\Configurator.txt' -ItemType File -Force
+    $AsdkConfigurator | Out-File 'C:\Temp\Configurator.txt' -Force
 
     if ($?)
     {
@@ -497,6 +495,34 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
+
+if (!($LocalAdminPass))
+{
+
+    $localCredValidated=$FALSE
+
+    do
+    {
+        $LocalAdminPass = $ASDKConfiguratorParams.VMpwd
+        $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
+        if ($DS.ValidateCredentials('Administrator', $adminPass_text) -eq $true)
+        {
+            $localCredValidated =  $true
+            New-Item -Path 'C:\Temp' -ItemType Directory
+            New-Item -Path 'C:\Temp\CredVal_True.txt' -ItemType File -Force
+            Write-Verbose "Password validated for user: Administrator" 
+        }
+        else
+        {
+            New-Item -Path 'C:\Temp' -ItemType Directory
+            New-Item -Path 'C:\Temp\CredVal_False.txt' -ItemType File -Force
+            Write-Error "Password cannot be validated for user: Administrator"
+            Break Break
+        }
+    } while ($localCredValidated -eq $FALSE)
+
+}
+
 Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)
 
         <#----#>
