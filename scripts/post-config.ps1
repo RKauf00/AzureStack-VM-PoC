@@ -508,18 +508,30 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 Rename-LocalUser -Name $username -NewName Administrator
 
 #################################################################################################
+
     New-Item -Path 'C:\Temp' -ItemType Directory
     New-Item -Path 'C:\Temp\passTest.txt' -ItemType File
 
     "" | Out-File 'C:\Temp\passTest.txt'
-    "Encrypted:" | Out-File 'C:\Temp\passTest.txt' -Append
+    "Encrypted (VMpwd):" | Out-File 'C:\Temp\passTest.txt' -Append
     "" | Out-File 'C:\Temp\passTest.txt' -Append
     $ASDKConfiguratorParams.VMpwd | Out-File 'C:\Temp\passTest.txt' -Append
     "" | Out-File 'C:\Temp\passTest.txt' -Append
     "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "Plain Text:" | Out-File 'C:\Temp\passTest.txt' -Append
+    "Plain Text (VMpwd):" | Out-File 'C:\Temp\passTest.txt' -Append
     "" | Out-File 'C:\Temp\passTest.txt' -Append
-    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($ASDKConfiguratorParams.VMpwd)) | Out-File 'C:\Temp\passTest.txt' -Append
+    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($($ASDKConfiguratorParams.VMpwd))) | Out-File 'C:\Temp\passTest.txt' -Append
+
+    "" | Out-File 'C:\Temp\passTest.txt'
+    "Encrypted (LocalAdminPass):" | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    $ASDKConfiguratorParams.VMpwd | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    "Plain Text (LocalAdminPass):" | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass) | Out-File 'C:\Temp\passTest.txt' -Append
+
 #################################################################################################
 
 #################################################################################################
