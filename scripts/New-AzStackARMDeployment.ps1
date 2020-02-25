@@ -110,7 +110,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -119,7 +119,7 @@
         <#----#>
     <#----#>
 <#----#>
-<#----#>            [string] $AzureADTenant            =  'Azure-Stack.us' #Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
+<#----#>            [String] $AzureADTenant            =  'Azure-Stack.us' #Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
 <#----#>
     <#----#>
         <#----#>
@@ -133,13 +133,13 @@
         <#----#>
     <#----#>
 <#----#>
-<#----#>                [string] $AzureADGlobalAdmin       =  'AzStackHostAdmin@Azure-Stack.us' #Read-Host "Azure AD Global Admin account UPN"
+<#----#>                [String] $AzureADGlobalAdmin       =  'AzStackHostAdmin@Azure-Stack.us' #Read-Host "Azure AD Global Admin account UPN"
 <#----#>
     <#----#>
         <#----#>
 
     # Set Azure VM Values
-    [string] $adminUsername            =  'AzStackAdmin'                          # Admin User Name
+    [String] $adminUsername            =  'AzStackAdmin'                          # Admin User Name
     [string] $virtualMachineName       =  'AzStackHost'
     [string] $virtualMachineSize       =  'Standard_E32s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024
@@ -166,8 +166,8 @@
         <#----#>
     <#----#>
 <#----#>
-<#----#>            [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
-<#----#>            [SecureString] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO' | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [String] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [String] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO' | ConvertTo-SecureString -AsPlainText -Force
 <#----#>
     <#----#>
         <#----#>
@@ -180,10 +180,10 @@
 
     # Build templateParameterObject Variable
     $templateParameterObject=@{}
-    $templateParameterObject.Add("AzureADTenant",$($AzureADTenant | ConvertTo-SecureString -AsPlainText -Force))
+    $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
     $templateParameterObject.Add("siteLocation",$siteLocation)
-    $templateParameterObject.Add("AzureADGlobalAdmin",$($AzureADGlobalAdmin | ConvertTo-SecureString -AsPlainText -Force))
-    $templateParameterObject.Add("adminUsername",$($adminUsername | ConvertTo-SecureString -AsPlainText -Force))
+    $templateParameterObject.Add("AzureADGlobalAdmin",$AzureADGlobalAdmin)
+    $templateParameterObject.Add("adminUsername",$adminUsername)
     $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
     $templateParameterObject.Add("virtualMachineName",$virtualMachineName)
     $templateParameterObject.Add("virtualMachineSize",$virtualMachineSize)

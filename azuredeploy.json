@@ -3,8 +3,8 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualMachineName": {
-            "type": "string",
             "defaultValue": "AzS-HOST1",
+            "type": "string",
             "metadata": {
                 "name": "Virtual Machine Name"
             }
@@ -63,14 +63,14 @@
         },
         "adminUsername": {
             "defaultValue": "AzStackAdmin",
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "name": "Admin Username"
             }
         },
         "adminPassword": {
             "defaultValue": "D)NTuseD#F@ULTp@s$wordz",
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "name": "Admin Password"
             }
@@ -137,21 +137,21 @@
         },
         "AzureADTenant": {
             "defaultValue": "<AzureADTenant>.onmicrosoft.com",
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "name": "Azure AD Tenant Name"
             }
         },
         "AzureADGlobalAdmin": {
             "defaultValue": "<alias>@<AzureADTenant>.onmicrosoft.com",
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "name": "Azure AD Gloabl Admin (UPN Format)"
             }
         },
         "AzureADGlobalAdminPassword": {
             "defaultValue": "1234",
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "name": "Azure AD Global Admin Password"
             }
