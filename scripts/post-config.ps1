@@ -130,14 +130,14 @@ if ($ASDKConfiguratorObject)
 {
     $AsdkConfigurator = ConvertFrom-Json $ASDKConfiguratorObject | ConvertFrom-Json
 
-    New-Item -Path 'C:\Temp\Configurator.txt' -ItemType File -Force
-    $AsdkConfigurator | Out-File 'C:\Temp\Configurator.txt' -Force
-
     if ($?)
     {
         
         $ASDKConfiguratorParams = $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject
 
+        New-Item -Path 'C:\Temp\Configurator.txt' -ItemType File -Force
+        $ASDKConfiguratorParams | Select * | Out-File 'C:\Temp\Configurator.txt' -Force
+    
         if (!($ASDKConfiguratorParams.downloadPath))
         {
             $ASDKConfiguratorParams.Add("downloadPath", "D:\ASDKfiles")
