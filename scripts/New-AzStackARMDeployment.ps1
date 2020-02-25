@@ -110,7 +110,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  9                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -119,7 +119,7 @@
         <#----#>
     <#----#>
 <#----#>
-<#----#>            [String] $AzureADTenant            =  'Azure-Stack.us' #Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
+<#----#>            [String] $AzureADTenant            =  'Azure-Stack.us'
 <#----#>
     <#----#>
         <#----#>
@@ -127,19 +127,18 @@
     [string] $siteLocation             =  $Location                              #"usgovtexas"
     [string] $resourceGroupNamePrefix  =  'AzStackPOC'                           # Resource Group Name Prefix
     [string] $resourceGroupName        =  "$($resourceGroupNamePrefix)-$($instanceNumber)"
- 
     #[string] $AzureADGlobalAdmin       =  Read-Host "Azure AD Global Admin account UPN"
 
         <#----#>
     <#----#>
 <#----#>
-<#----#>                [String] $AzureADGlobalAdmin       =  'AzStackHostAdmin@Azure-Stack.us' #Read-Host "Azure AD Global Admin account UPN"
+<#----#>                [String] $AzureADGlobalAdmin       =  'AzStackHostAdmin@Azure-Stack.us'
 <#----#>
     <#----#>
         <#----#>
 
     # Set Azure VM Values
-    [String] $adminUsername            =  'AzStackAdmin'                          # Admin User Name
+    [String] $adminUsername            =  'AzStackAdmin'                          # VM Admin User Name
     [string] $virtualMachineName       =  'AzStackHost'
     [string] $virtualMachineSize       =  'Standard_E32s_v3'                      # v1811+ requires 256GB RAM
     [int]    $dataDiskSizeinGB         =  1024

@@ -504,7 +504,6 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
     }
 }
 
-#Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
 
 #################################################################################################
@@ -522,7 +521,7 @@ Rename-LocalUser -Name $username -NewName Administrator
     "" | Out-File 'C:\Temp\passTest.txt' -Append
     [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($($ASDKConfiguratorParams.localpw))) | Out-File 'C:\Temp\passTest.txt' -Append
 
-    "" | Out-File 'C:\Temp\passTest.txt'
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
     "Encrypted (VMpwd):" | Out-File 'C:\Temp\passTest.txt' -Append
     "" | Out-File 'C:\Temp\passTest.txt' -Append
     $ASDKConfiguratorParams.localpw | Out-File 'C:\Temp\passTest.txt' -Append
@@ -532,7 +531,7 @@ Rename-LocalUser -Name $username -NewName Administrator
     "" | Out-File 'C:\Temp\passTest.txt' -Append
     [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($($ASDKConfiguratorParams.VMpwd))) | Out-File 'C:\Temp\passTest.txt' -Append
 
-    "" | Out-File 'C:\Temp\passTest.txt'
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
     "Encrypted (LocalAdminPass):" | Out-File 'C:\Temp\passTest.txt' -Append
     "" | Out-File 'C:\Temp\passTest.txt' -Append
     $ASDKConfiguratorParams.VMpwd | Out-File 'C:\Temp\passTest.txt' -Append
@@ -546,7 +545,7 @@ Rename-LocalUser -Name $username -NewName Administrator
 
 #################################################################################################
 #Set-LocalUser -Name Administrator -Password $LocalAdminPass
-Set-LocalUser -Name Administrator -Password $ASDKConfiguratorParams.localpw
+#Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.localpw | ConvertTo-SecureString -AsPlainText -Force)
 #################################################################################################
 
         <#----#>

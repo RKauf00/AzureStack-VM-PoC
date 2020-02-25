@@ -70,7 +70,7 @@
         },
         "adminPassword": {
             "defaultValue": "D)NTuseD#F@ULTp@s$wordz",
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "name": "Admin Password"
             }
@@ -144,7 +144,7 @@
         },
         "AzureADGlobalAdmin": {
             "defaultValue": "<alias>@<AzureADTenant>.onmicrosoft.com",
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "name": "Azure AD Gloabl Admin (UPN Format)"
             }
@@ -323,7 +323,7 @@
                             "fileUris": [
                                 "[variables('fileUri')]"
                             ],
-                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'), ' -Username ', parameters('adminUsername'), ' -LocalAdminPass ', parameters('adminPassword'), ' -Branch ', parameters('branch'), ' -EnableDownloadASDK ', ' -AzureImage ', ' -AutoDownloadASDK ', parameters('autoDownloadASDK'), ' -EnableRDSH ', parameters('enableRDSH'), variables('autoInstallASDKparameters'), variables('ASDKConfiguratorParameters'))]"
+                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'), ' -Username ', parameters('adminUsername'), ' -Branch ', parameters('branch'), ' -EnableDownloadASDK ', ' -AzureImage ', ' -AutoDownloadASDK ', parameters('autoDownloadASDK'), ' -EnableRDSH ', parameters('enableRDSH'), variables('autoInstallASDKparameters'), variables('ASDKConfiguratorParameters'))]"
                         }
                     }
                 }
