@@ -110,7 +110,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  10                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -166,8 +166,8 @@
         <#----#>
     <#----#>
 <#----#>
-<#----#>            [String] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
-<#----#>            [String] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO'  | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [SecureString] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO' | ConvertTo-SecureString -AsPlainText -Force
 <#----#>
     <#----#>
         <#----#>

@@ -6,10 +6,11 @@
             "type": "string",
             "defaultValue": "AzS-HOST1",
             "metadata": {
-                "name": "AzS-HOST1"
+                "name": "Virtual Machine Name"
             }
         },
         "virtualMachineSize": {
+            "defaultValue": "Standard_E48s_v3",
             "type": "string",
             "allowedValues": [
                 "Standard_D48s_v3",
@@ -19,12 +20,12 @@
                 "Standard_D64s_v3",
                 "Standard_E64s_v3"
             ],
-            "defaultValue": "Standard_E48s_v3",
             "metadata": {
-                "name": "Standard_E48s_v3"
+                "name": "Virtual Machine Size"
             }
         },
         "dataDiskSizeinGB": {
+            "defaultValue": 1024,
             "type": "int",
             "allowedValues": [
                 256,
@@ -32,12 +33,12 @@
                 1024,
                 2048
             ],
-            "defaultValue": 1024,
             "metadata": {
-                "name": 1024
+                "name": "Data disk size (GB)"
             }
         },
         "dataDiskCount": {
+            "defaultValue": 8,
             "type": "int",
             "allowedValues": [
                 4,
@@ -49,51 +50,50 @@
                 28,
                 32
             ],
-            "defaultValue": 8,
             "metadata": {
-                "name": 8
+                "name": "Data disk count"
             }
         },
         "virtualNetworkName": {
-            "type": "string",
             "defaultValue": "AzStack-VNET",
+            "type": "string",
             "metadata": {
-                "name": "AzStack-VNET"
+                "name": "Virtual Network Name"
             }
         },
         "adminUsername": {
-            "type": "string",
             "defaultValue": "AzStackAdmin",
+            "type": "securestring",
             "metadata": {
-                "name": "AzStackAdmin"
+                "name": "Admin Username"
             }
         },
         "adminPassword": {
-            "type": "string",
             "defaultValue": "D)NTuseD#F@ULTp@s$wordz",
+            "type": "securestring",
             "metadata": {
-                "name": "D)NTuseD#F@ULTp@s$wordz"
+                "name": "Admin Password"
             }
         },
         "addressPrefix": {
-            "type": "string",
             "defaultValue": "10.0.0.0/24",
+            "type": "string",
             "metadata": {
-                "name": "10.0.0.0/24"
+                "name": "Address Prefix (CIDR Format)"
             }
         },
         "subnetName": {
             "type": "string",
             "defaultValue": "default",
             "metadata": {
-                "name": "default"
+                "name": "Subnet Name"
             }
         },
         "subnetPrefix": {
             "type": "string",
             "defaultValue": "10.0.0.0/24",
             "metadata": {
-                "name": "10.0.0.0/24"
+                "name": "Subnet Prefix (CIDR Format)"
             }
         },
         "publicIpAddressType": {
@@ -104,21 +104,24 @@
                 "Static"
             ],
             "metadata": {
-                "name": "Dynamic"
+                "name": "Public IP Address Type"
             }
         },
         "publicDnsName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "name": "Public DNS Name"
+            }
         },
         "autoDownloadASDK": {
-            "type": "bool",
             "defaultValue": false,
+            "type": "bool",
             "allowedValues": [
                 true,
                 false
             ],
             "metadata": {
-                "name": false
+                "name": "Auto Download ASDK (True/False)"
             }
         },
         "autoInstallASDK": {
@@ -129,49 +132,49 @@
             ],
             "type": "bool",
             "metadata": {
-                "name": false
+                "name": "Auto Install ASDK (True/False)"
             }
         },
         "AzureADTenant": {
             "defaultValue": "<AzureADTenant>.onmicrosoft.com",
-            "type": "string",
+            "type": "securestring",
             "metadata": {
-                "name": "<AzureADTenant>.onmicrosoft.com"
+                "name": "Azure AD Tenant Name"
             }
         },
         "AzureADGlobalAdmin": {
             "defaultValue": "<alias>@<AzureADTenant>.onmicrosoft.com",
-            "type": "string",
+            "type": "securestring",
             "metadata": {
-                "name": "<alias>@<AzureADTenant>.onmicrosoft.com"
+                "name": "Azure AD Gloabl Admin (UPN Format)"
             }
         },
         "AzureADGlobalAdminPassword": {
-            "type": "string",
             "defaultValue": "1234",
+            "type": "securestring",
             "metadata": {
-                "name": "1234"
+                "name": "Azure AD Global Admin Password"
             }
         },
         "AgencyName": {
             "type": "string",
             "defaultValue": "MSFT",
             "metadata": {
-                "name": "MSFT"
+                "name": "Company/Agency Name"
             }
         },
         "DeparatmentName": {
             "type": "string",
             "defaultValue": "TestDev",
             "metadata": {
-                "name": "TestDev"
+                "name": "Administrator Department Name"
             }
         },
         "AdminInitials": {
             "type": "string",
             "defaultValue": "RWK",
             "metadata": {
-                "name": "RWK"
+                "name": "Administrators Initials"
             }
         },
         "ASDKConfiguratorObject": {
@@ -204,7 +207,7 @@
                 false
             ],
             "metadata": {
-                "name": false
+                "name": "Enable RDSH Access (True/False)"
             }
         },
         "branch": {
@@ -215,14 +218,14 @@
                 "development"
             ],
             "metadata": {
-                "name": "master"
+                "name": "GitHub Branch"
             }
         },
         "siteLocation": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
             "metadata": {
-                "name": "[resourceGroup().location]"
+                "name": "Resource Group Location"
             }
         }
     },
