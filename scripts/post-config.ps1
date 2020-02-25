@@ -507,58 +507,21 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
 
-if (!($LocalAdminPass))
-{
-    $LocalAdminPass = $ASDKConfiguratorParams.VMpwd
-    $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
-    if ($DS.ValidateCredentials('Administrator', $adminPass_text) -eq $true)
-    {
-        New-Item -Path 'C:\Temp' -ItemType Directory
-        New-Item -Path 'C:\Temp\CredVal1_True.txt' -ItemType File -Force
-        Write-Verbose "Password validated for user: Administrator" 
-    }
-    else
-    {
-        New-Item -Path 'C:\Temp' -ItemType Directory
-        New-Item -Path 'C:\Temp\CredVal1_False.txt' -ItemType File -Force
-        Write-Verbose "Password cannot be validated for user: Administrator"
-    }
-}
-else
-{
     New-Item -Path 'C:\Temp' -ItemType Directory
-    New-Item -Path 'C:\Temp\LocalAd1.txt' -ItemType File
-    $LocalAdminPass.ToString() | Out-File 'C:\Temp\LocalAd1.txt'
-    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass)) | Out-File 'C:\Temp\LocalAd1.txt' -Append
-}
+    New-Item -Path 'C:\Temp\passTest.txt' -ItemType File
 
-if (!($LocalAdminPass))
-{
-    $LocalAdminPass = $ASDKConfiguratorParams.localpw | ConvertTo-SecureString -AsPlainText -Force
-    $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
-    if ($DS.ValidateCredentials('Administrator', $adminPass_text) -eq $true)
-    {
-        New-Item -Path 'C:\Temp' -ItemType Directory
-        New-Item -Path 'C:\Temp\CredVal2_True.txt' -ItemType File -Force
-        Write-Verbose "Password validated for user: Administrator" 
-    }
-    else
-    {
-        New-Item -Path 'C:\Temp' -ItemType Directory
-        New-Item -Path 'C:\Temp\CredVal2_False.txt' -ItemType File -Force
-        Write-Verbose "Password cannot be validated for user: Administrator"
-    }
-}
-else
-{
-    New-Item -Path 'C:\Temp' -ItemType Directory
-    New-Item -Path 'C:\Temp\LocalAd2.txt' -ItemType File
-    $LocalAdminPass.ToString() | Out-File 'C:\Temp\LocalAd2.txt'
-    ""
-    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass)) | Out-File 'C:\Temp\LocalAd2.txt' -Append
-}
+    "" | Out-File 'C:\Temp\passTest.txt'
+    "Encrypted:" | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    $ASDKConfiguratorParams.VMpwd | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    "Plain Text:" | Out-File 'C:\Temp\passTest.txt' -Append
+    "" | Out-File 'C:\Temp\passTest.txt' -Append
+    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($ASDKConfiguratorParams.VMpwd)) | Out-File 'C:\Temp\passTest.txt' -Append
 
-Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)
+#Set-LocalUser -Name Administrator -Password $LocalAdminPass
+Set-LocalUser -Name Administrator -Password $ASDKConfiguratorParams.VMpwd
 
         <#----#>
     <#----#>
