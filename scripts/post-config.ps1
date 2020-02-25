@@ -135,8 +135,15 @@ if ($ASDKConfiguratorObject)
         
         $ASDKConfiguratorParams = $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject
 
+        if (!(Test-Path 'C:\Temp'))
+        {
+            New-Item 'C:\Temp' -ItemType Directory -Force
+        }
+
+#################################################################################################
         New-Item -Path 'C:\Temp\Configurator.txt' -ItemType File -Force
         $ASDKConfiguratorParams | Select * | Out-File 'C:\Temp\Configurator.txt' -Force
+#################################################################################################
     
         if (!($ASDKConfiguratorParams.downloadPath))
         {
@@ -171,6 +178,10 @@ if ($ASDKConfiguratorObject)
                 $paramsArray += "-" + "$param " + "`'" + "$($ASDKConfiguratorParams["$param"])" + "`'"
             }
         }
+
+#################################################################################################
+        $paramsArray | Select * | Out-File 'C:\Temp\paramsArray.txt' -Force
+#################################################################################################
 
         $paramsString = $paramsArray -join " "
 
