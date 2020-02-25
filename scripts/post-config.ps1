@@ -498,29 +498,38 @@ Rename-LocalUser -Name $username -NewName Administrator
 
 if (!($LocalAdminPass))
 {
-
-    $localCredValidated=$FALSE
-
-    do
-    {
         $LocalAdminPass = $ASDKConfiguratorParams.VMpwd
         $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
         if ($DS.ValidateCredentials('Administrator', $adminPass_text) -eq $true)
         {
-            $localCredValidated =  $true
             New-Item -Path 'C:\Temp' -ItemType Directory
-            New-Item -Path 'C:\Temp\CredVal_True.txt' -ItemType File -Force
+            New-Item -Path 'C:\Temp\CredVal1_True.txt' -ItemType File -Force
             Write-Verbose "Password validated for user: Administrator" 
         }
         else
         {
             New-Item -Path 'C:\Temp' -ItemType Directory
-            New-Item -Path 'C:\Temp\CredVal_False.txt' -ItemType File -Force
-            Write-Error "Password cannot be validated for user: Administrator"
-            Break Break
+            New-Item -Path 'C:\Temp\CredVal1_False.txt' -ItemType File -Force
+            Write-Verbose "Password cannot be validated for user: Administrator"
         }
-    } while ($localCredValidated -eq $FALSE)
+}
 
+if (!($LocalAdminPass))
+{
+        $LocalAdminPass = $ASDKConfiguratorParams.localpw
+        $adminPass_text = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($localAdminPass))
+        if ($DS.ValidateCredentials('Administrator', $adminPass_text) -eq $true)
+        {
+            New-Item -Path 'C:\Temp' -ItemType Directory
+            New-Item -Path 'C:\Temp\CredVal2_True.txt' -ItemType File -Force
+            Write-Verbose "Password validated for user: Administrator" 
+        }
+        else
+        {
+            New-Item -Path 'C:\Temp' -ItemType Directory
+            New-Item -Path 'C:\Temp\CredVal2_False.txt' -ItemType File -Force
+            Write-Verbose "Password cannot be validated for user: Administrator"
+        }
 }
 
 Set-LocalUser -Name Administrator -Password $($LocalAdminPass | ConvertTo-SecureString -AsPlainText -Force)

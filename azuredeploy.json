@@ -69,7 +69,7 @@
             }
         },
         "adminPassword": {
-            "type": "securestring",
+            "type": "string",
             "defaultValue": "D)NTuseD#F@ULTp@s$wordz",
             "metadata": {
                 "name": "D)NTuseD#F@ULTp@s$wordz"
@@ -147,10 +147,31 @@
             }
         },
         "AzureADGlobalAdminPassword": {
-            "type": "securestring",
+            "type": "string",
             "defaultValue": "1234",
             "metadata": {
                 "name": "1234"
+            }
+        },
+        "AgencyName": {
+            "type": "string",
+            "defaultValue": "MSFT",
+            "metadata": {
+                "name": "MSFT"
+            }
+        },
+        "DeparatmentName": {
+            "type": "string",
+            "defaultValue": "TestDev",
+            "metadata": {
+                "name": "TestDev"
+            }
+        },
+        "AdminInitials": {
+            "type": "string",
+            "defaultValue": "RWK",
+            "metadata": {
+                "name": "RWK"
             }
         },
         "ASDKConfiguratorObject": {
@@ -170,7 +191,8 @@
                     "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]",
                     "registerASDK": "true",
                     "useAzureCredsForRegistration":"true",
-                    "azureRegSubId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                    "azureRegSubId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "localpw": "[concat(parameters('AgencyName'), '*', parameters('DeparatmentName'), '^', parameters('AdminInitials'), '_135!#%')]"
                 }
             }
         },
