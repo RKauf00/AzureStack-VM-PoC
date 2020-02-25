@@ -507,6 +507,7 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 #Rename-LocalUser -Name $Username -NewName $LocalAdminUsername
 Rename-LocalUser -Name $username -NewName Administrator
 
+#################################################################################################
     New-Item -Path 'C:\Temp' -ItemType Directory
     New-Item -Path 'C:\Temp\passTest.txt' -ItemType File
 
@@ -519,9 +520,12 @@ Rename-LocalUser -Name $username -NewName Administrator
     "Plain Text:" | Out-File 'C:\Temp\passTest.txt' -Append
     "" | Out-File 'C:\Temp\passTest.txt' -Append
     [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($ASDKConfiguratorParams.VMpwd)) | Out-File 'C:\Temp\passTest.txt' -Append
+#################################################################################################
 
-#Set-LocalUser -Name Administrator -Password $LocalAdminPass
-Set-LocalUser -Name Administrator -Password $ASDKConfiguratorParams.VMpwd
+#################################################################################################
+Set-LocalUser -Name Administrator -Password $LocalAdminPass
+#Set-LocalUser -Name Administrator -Password $ASDKConfiguratorParams.VMpwd
+#################################################################################################
 
         <#----#>
     <#----#>
