@@ -107,6 +107,9 @@ else
 #Download Install-ASDK.ps1 (installer)
 DownloadWithRetry -Uri "$branchFullPath/scripts/Install-ASDK.ps1" -DownloadLocation "$defaultLocalPath\Install-ASDK.ps1"
 
+#Download MSFT Edge Enterprise MSI (installer)
+DownloadWithRetry -Uri "$branchFullPath/Files/MicrosoftEdgeEnterpriseX64.msi" -DownloadLocation "$defaultLocalPath\MicrosoftEdgeEnterpriseX64.msi"
+
 #Download and extract Mobaxterm
 DownloadWithRetry -Uri "https://aka.ms/mobaxtermLatest" -DownloadLocation "$defaultLocalPath\Mobaxterm.zip"
 Expand-Archive -Path "$defaultLocalPath\Mobaxterm.zip" -DestinationPath "$defaultLocalPath\Mobaxterm"
@@ -139,11 +142,6 @@ if ($ASDKConfiguratorObject)
         {
             New-Item 'C:\Temp' -ItemType Directory -Force
         }
-
-#################################################################################################
-        New-Item -Path 'C:\Temp\Configurator.txt' -ItemType File -Force
-        $ASDKConfiguratorParams | Out-File 'C:\Temp\Configurator.txt' -Force
-#################################################################################################
     
         if (!($ASDKConfiguratorParams.downloadPath))
         {
@@ -178,10 +176,6 @@ if ($ASDKConfiguratorObject)
                 $paramsArray += "-" + "$param " + "`'" + "$($ASDKConfiguratorParams["$param"])" + "`'"
             }
         }
-
-#################################################################################################
-        $paramsArray | Out-File 'C:\Temp\paramsArray.txt' -Force
-#################################################################################################
 
         $paramsString = $paramsArray -join " "
 
@@ -515,60 +509,7 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 }
 
 Rename-LocalUser -Name $username -NewName Administrator
-
-#################################################################################################
-
-    New-Item -Path 'C:\Temp' -ItemType Directory
-    New-Item -Path 'C:\Temp\passTest.txt' -ItemType File
-
-    "" | Out-File 'C:\Temp\passTest.txt'
-    "Encrypted (localpw):" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    $ASDKConfiguratorParams.localpw | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "Plain Text (localpw):" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($($ASDKConfiguratorParams.localpw))) | Out-File 'C:\Temp\passTest.txt' -Append
-
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "Encrypted (VMpwd):" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    $ASDKConfiguratorParams.localpw | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "Plain Text (VMpwd):" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($($ASDKConfiguratorParams.VMpwd))) | Out-File 'C:\Temp\passTest.txt' -Append
-
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "Encrypted (LocalAdminPass):" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    $ASDKConfiguratorParams.VMpwd | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    "Plain Text (LocalAdminPass):" | Out-File 'C:\Temp\passTest.txt' -Append
-    "" | Out-File 'C:\Temp\passTest.txt' -Append
-    [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass)) | Out-File 'C:\Temp\passTest.txt' -Append
-
-#################################################################################################
-
-#################################################################################################
-#Set-LocalUser -Name Administrator -Password $LocalAdminPass
 Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.localpw | ConvertTo-SecureString -AsPlainText -Force)
-#################################################################################################
-
-        <#----#>
-    <#----#>
-<#----#>
-<#----#>
-<#----#>                                ## ** DIAGNOSTIC COMMAND | DELETE AFTER TESTING ** ##
-<#----#>                                #Set-LocalUser -Name Administrator -Password $($LocalAdminPass)
-<#----#>                                #Set-LocalUser -Name Administrator -Password $('*W^Ma03,k.u^49)6cq' | ConvertTo-SecureString -AsPlainText -Force)
-<#----#>
-<#----#>
-    <#----#>
-        <#----#>
 
 if ($AutoInstallASDK)
 {
@@ -650,6 +591,22 @@ $AutoInstallASDKScriptBlock += @"
     Register-ScheduledTask @registrationParams
 }
 
+$MSI = "C:\AzureStackOnAzureVM\MicrosoftEdgeEnterpriseX64.msi"
+if ([System.IO.File]::Exists($MSI) -eq $TRUE)
+{
+    $File = Get-Item -Path $MSI
+    $DataStamp = get-date -Format yyyyMMddTHHmmss
+    $logFile = '{0}-{1}.log' -f $File.Fullname,$DataStamp
+    $MSIArguments = @(
+        "/i"
+        ('"{0}"' -f $File.Fullname)
+        "/qn"
+        "/norestart"
+        "/L*v"
+        $logFile
+    )
+    Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow
+}
 
 $AzStackDocURI = 'https://opdhsblobprod04.blob.core.windows.net/contents/6aecb106c9424c12ae45f4e8da9858c3/07c02d50b77b804ca280195f331185fc?sv=2015-04-05&sr=b&sig=gAS%2F6nW%2FBIf1F%2FHHrKZgE6aG2FmH%2F8AnPHqnBiQ6O38%3D&st=2020-02-26T13%3A27%3A48Z&se=2020-02-27T13%3A37%3A48Z&sp=r'
 
