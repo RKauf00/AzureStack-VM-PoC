@@ -545,7 +545,7 @@ Rename-LocalUser -Name $username -NewName Administrator
 
 #################################################################################################
 #Set-LocalUser -Name Administrator -Password $LocalAdminPass
-#Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.localpw | ConvertTo-SecureString -AsPlainText -Force)
+Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.localpw | ConvertTo-SecureString -AsPlainText -Force)
 #################################################################################################
 
         <#----#>
