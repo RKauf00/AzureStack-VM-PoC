@@ -30,7 +30,7 @@ param (
 )
 
 #region Variables
-$VerbosePreference = "Continue"
+$VerbosePreference = "SilentlyContinue"    #"Continue"
 $global:defaultLocalPath = "C:\AzureStackOnAzureVM"
 $transcriptLog = "Install-ASDK-transcript.txt"
 

@@ -347,27 +347,28 @@ if ($AzureImage)
         <#----#>
     <#----#>
 <#----#>
+            Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
             $WshShell = New-Object -comObject WScript.Shell
-            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\_AAD_LatestVer_Install-ASDK.lnk")
+            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
             $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
             $Shortcut.WorkingDirectory = "$defaultLocalPath"
-            $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($AzureADTenant) -Version latest}"
+            $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
             $Shortcut.Save()
 <#----#>
     <#----#>
         <#----#>
 
-            Write-Log @writeLogParams -Message "Creating shortcut AAD_Install-ASDK.lnk"
+            Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
             $WshShell = New-Object -comObject WScript.Shell
-            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_Install-ASDK.lnk")
+            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
             $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
             $Shortcut.WorkingDirectory = "$defaultLocalPath"
             $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD}"
             $Shortcut.Save()
 
-            Write-Log @writeLogParams -Message "Creating shortcut ADFS_Install-ASDK.lnk"
+            Write-Log @writeLogParams -Message "Creating shortcut 3_ADFS_Install-ASDK.lnk"
             $WshShell = New-Object -comObject WScript.Shell
-            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\ADFS_Install-ASDK.lnk")
+            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
             $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
             $Shortcut.WorkingDirectory = "$defaultLocalPath"
             $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS}"
@@ -386,39 +387,44 @@ if ($AzureImage)
         <#----#>
     <#----#>
 <#----#>
+                Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\_AAD_LatestVer_Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType AAD -AADTenant $($AzureADTenant) -Version latest}"
+                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
                 $Shortcut.Save()
 <#----#>
     <#----#>
         <#----#>
 
+                Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType AAD}"
                 $Shortcut.Save()
 
+                Write-Log @writeLogParams -Message "Creating shortcut 3_ADFS_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\ADFS_Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType ADFS}"
                 $Shortcut.Save()
 
+                Write-Log @writeLogParams -Message "Creating shortcut 4_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\4_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK}"
                 $Shortcut.Save()
 
+                Write-Log @writeLogParams -Message "Creating shortcut 5_Latest_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\Latest_Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\5_Latest_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -Version $latestASDK}"
@@ -430,32 +436,36 @@ if ($AzureImage)
         <#----#>
     <#----#>
 <#----#>
+                Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\_AAD_LatestVer_Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($AzureADTenant) -Version latest}"
+                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
                 $Shortcut.Save()
 <#----#>
     <#----#>
         <#----#>
 
+                Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD}"
                 $Shortcut.Save()
 
+                Write-Log @writeLogParams -Message "Creating shortcut 3_ADFS_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\ADFS_Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS}"
                 $Shortcut.Save()
 
+                Write-Log @writeLogParams -Message "Creating shortcut 4_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\Install-ASDK.lnk")
+                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\4_Install-ASDK.lnk")
                 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1}"
@@ -639,6 +649,17 @@ $AutoInstallASDKScriptBlock += @"
 
     Register-ScheduledTask @registrationParams
 }
+
+
+$AzStackDocURI = 'https://opdhsblobprod04.blob.core.windows.net/contents/6aecb106c9424c12ae45f4e8da9858c3/07c02d50b77b804ca280195f331185fc?sv=2015-04-05&sr=b&sig=gAS%2F6nW%2FBIf1F%2FHHrKZgE6aG2FmH%2F8AnPHqnBiQ6O38%3D&st=2020-02-26T13%3A27%3A48Z&se=2020-02-27T13%3A37%3A48Z&sp=r'
+
+$BasePath = "$($env:ALLUSERSPROFILE)\Desktop\AzStack Docs"
+
+if ([System.IO.Directory]::Exists($BasePath) -ne $TRUE) { [System.IO.Directory]::CreateDirectory($BasePath) }
+
+$FilePath = "$($BasePath)\MSFTDocs - Azure Stack Hub - $((Get-Date -Format ddMMMyy).ToUpperInvariant()).pdf"
+
+if ([System.IO.File]::Exists($FilePath) -ne $TRUE) { [io.file]::WriteAllBytes($FilePath,(Invoke-WebRequest -URI "$($AzStackDocURI)").content) }
 
 Stop-Transcript
 
