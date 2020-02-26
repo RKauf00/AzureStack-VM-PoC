@@ -594,28 +594,34 @@ $AutoInstallASDKScriptBlock += @"
 $MSI = "C:\AzureStackOnAzureVM\MicrosoftEdgeEnterpriseX64.msi"
 if ([System.IO.File]::Exists($MSI) -eq $TRUE)
 {
-    $File = Get-Item -Path $MSI
-    $DataStamp = get-date -Format yyyyMMddTHHmmss
-    $logFile = '{0}-{1}.log' -f $File.Fullname,$DataStamp
-    $MSIArguments = @(
-        "/i"
-        ('"{0}"' -f $File.Fullname)
-        "/qn"
-        "/norestart"
-        "/L*v"
-        $logFile
-    )
-    Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow
+    $SH = '974EC5E0CB73A298E6FB094EBAE71961462A6A13AEED6CD8BC84977BCB30A7E0A48EC73A381A55E5B010C0E2967F7661003AF74E2FE46ACE5870C48990C6C939'
+    if ((Get-FileHash -Path $MSI -Algorithm SHA512).Hash -ne $SH)
+    {
+        Write-Log @writeLogParams -Message "`n`n ********** `n`n File hash mismatch detected on $($MSI); installation aborted `n`n ********** `n`n"
+    }
+    else
+    {
+        $File = Get-Item -Path $MSI
+        Write-Log @writeLogParams -Message "Installing $($File.BaseName)"
+        $DataStamp = get-date -Format yyyyMMddTHHmmss
+        $logFile = '{0}-{1}.log' -f $File.Fullname,$DataStamp
+        $MSIArguments = @(
+            "/i"
+            ('"{0}"' -f $File.Fullname)
+            "/qn"
+            "/norestart"
+            "/L*v"
+            $logFile
+        )
+        Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow
+        Write-Log @writeLogParams -Message "Installation finished"
+    }
 }
 
 $AzStackDocURI = 'https://opdhsblobprod04.blob.core.windows.net/contents/6aecb106c9424c12ae45f4e8da9858c3/07c02d50b77b804ca280195f331185fc?sv=2015-04-05&sr=b&sig=gAS%2F6nW%2FBIf1F%2FHHrKZgE6aG2FmH%2F8AnPHqnBiQ6O38%3D&st=2020-02-26T13%3A27%3A48Z&se=2020-02-27T13%3A37%3A48Z&sp=r'
-
 $BasePath = "$($env:ALLUSERSPROFILE)\Desktop\AzStack Docs"
-
 if ([System.IO.Directory]::Exists($BasePath) -ne $TRUE) { [System.IO.Directory]::CreateDirectory($BasePath) }
-
 $FilePath = "$($BasePath)\MSFTDocs - Azure Stack Hub - $((Get-Date -Format ddMMMyy).ToUpperInvariant()).pdf"
-
 if ([System.IO.File]::Exists($FilePath) -ne $TRUE) { [io.file]::WriteAllBytes($FilePath,(Invoke-WebRequest -URI "$($AzStackDocURI)").content) }
 
 Stop-Transcript
