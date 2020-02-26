@@ -110,7 +110,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  6                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  5                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -198,20 +198,6 @@
     $templateParameterObject.Add("autoDownloadASDK",$autoDownloadASDK)
     $templateParameterObject.Add("autoInstallASDK",$autoInstallASDK)
     $templateParameterObject.Add("AzureADGlobalAdminPassword",$AzureADGlobalAdminPassword)
-
-
-# Create ARM template parameter object
-#
-#    $templateParameterObject = @{}
-#    $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
-#    $templateParameterObject.Add("publicDnsName",$publicDnsName.ToLower())
-#    $templateParameterObject.Add("autoDownloadASDK", $autoDownloadASDK)
-#    $templateParameterObject.Add("autoInstallASDK", $autoInstallASDK)
-#    $templateParameterObject.Add("virtualMachineSize", $virtualMachineSize)
-#    $templateParameterObject.Add("adminUsername", $adminUsername)
-#    $templateParameterObject.Add("AzureADTenant", $AzureADTenant)
-#    $templateParameterObject.Add("AzureADGlobalAdmin", $AzureADGlobalAdmin)
-#    $templateParameterObject.Add("AzureADGlobalAdminPassword", $AzureADGlobalAdminPassword)
 
 
 # Create Resource Group
