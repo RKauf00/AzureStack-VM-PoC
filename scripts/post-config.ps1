@@ -74,8 +74,6 @@ function DownloadWithRetry([string] $Uri, [string] $DownloadLocation, [int] $Ret
     }
 }
 
-#$LocalAdminPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($LocalAdminPass))
-
 $size = Get-Volume -DriveLetter c | Get-PartitionSupportedSize
 Resize-Partition -DriveLetter c -Size $size.sizemax
 
@@ -292,7 +290,7 @@ if ($AzureImage)
     if (!($AsdkFileList))
     {
         $AsdkFileList = @("AzureStackDevelopmentKit.exe")
-        1..10 | ForEach-Object {$AsdkFileList += "AzureStackDevelopmentKit-$_" + ".bin"}
+        1..11 | ForEach-Object {$AsdkFileList += "AzureStackDevelopmentKit-$_" + ".bin"}
     }
 
     if (Test-Path -Path $defaultLocalPath\testedVersions)
