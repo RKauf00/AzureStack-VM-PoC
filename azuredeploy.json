@@ -188,10 +188,12 @@
                     "authenticationType": "AzureAD",
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
-                    "azureStackAdminPwd": "[parameters('adminPassword')]",
-                    "VMpwd": "[parameters('adminPassword')]",
                     "AzureADUsername": "[parameters('AzureADGlobalAdmin')]",
-                    "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]",
+                    "protectedSettings": {
+                        "VMpwd": "[parameters('adminPassword')]",
+                        "azureStackAdminPwd": "[parameters('adminPassword')]",
+                        "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]"
+                    },
                     "registerASDK": "true",
                     "useAzureCredsForRegistration":"true",
                     "azureRegSubId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -256,7 +258,9 @@
                 "osProfile": {
                     "computerName": "[parameters('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]",
+                    "protectedSettings": {
+                        "adminPassword": "[parameters('adminPassword')]"
+                    },
                     "windowsConfiguration": {
                         "provisionVmAgent": "true"
                     }
