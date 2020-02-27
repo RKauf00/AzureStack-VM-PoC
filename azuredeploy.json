@@ -255,10 +255,10 @@
                 "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
             ],
             "properties": {
-                "protectedSettings": {
-                    "adminPassword": "[parameters('adminPassword')]"
-                },
                 "osProfile": {
+                    "protectedSettings": {
+                        "adminPassword": "[parameters('adminPassword')]"
+                    },
                     "computerName": "[parameters('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "PrivateSettingsRef:adminPassword",
