@@ -189,11 +189,9 @@
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
                     "AzureADUsername": "[parameters('AzureADGlobalAdmin')]",
-                    "protectedSettings": {
-                        "VMpwd": "[parameters('adminPassword')]",
-                        "azureStackAdminPwd": "[parameters('adminPassword')]",
-                        "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]"
-                    },
+                    "VMpwd": "[parameters('adminPassword')]",
+                    "azureStackAdminPwd": "[parameters('adminPassword')]",
+                    "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]",
                     "registerASDK": "true",
                     "useAzureCredsForRegistration":"true",
                     "azureRegSubId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -242,7 +240,7 @@
         "networkSecurityGroupName": "[concat(parameters('virtualMachineName'),'-NSG')]",
         "publicIpAddressName": "[concat(parameters('virtualMachineName'),'-IP')]",
         "singleQuote": "'",
-        "autoInstallASDKparameters": "[if(bool(parameters('autoInstallASDK')), concat(' -AutoInstallASDK ',' -AzureADTenant ', parameters('AzureADTenant'), ' -AzureADGlobalAdmin ', parameters('AzureADGlobalAdmin'), ' -AzureADGlobalAdminPass ', parameters('PrivateSettingsRef:AzureADGlobalAdminPassword'), ' -LocalAdminPass ', parameters('PrivateSettingsRef:adminPassword')), '')]",
+        "autoInstallASDKparameters": "[if(bool(parameters('autoInstallASDK')), concat(' -AutoInstallASDK ',' -AzureADTenant ', parameters('AzureADTenant'), ' -AzureADGlobalAdmin ', parameters('AzureADGlobalAdmin'), ' -AzureADGlobalAdminPass ', parameters('AzureADGlobalAdminPassword'), ' -LocalAdminPass ', parameters('adminPassword')), '')]",
         "ASDKConfiguratorParameters": "[concat(' -ASDKConfiguratorObject ', variables('singleQuote'), replace(replace(string(parameters('ASDKConfiguratorObject')), '\\', '\\\\'), '\"', '\\\"'), variables('singleQuote'))]"
     },
     "resources" : [
