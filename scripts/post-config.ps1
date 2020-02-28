@@ -290,7 +290,7 @@ if ($AzureImage)
     if (!($AsdkFileList))
     {
         $AsdkFileList = @("AzureStackDevelopmentKit.exe")
-        1..11 | ForEach-Object {$AsdkFileList += "AzureStackDevelopmentKit-$_" + ".bin"}
+        1..10 | ForEach-Object {$AsdkFileList += "AzureStackDevelopmentKit-$_" + ".bin"}
     }
 
     if (Test-Path -Path $defaultLocalPath\testedVersions)
@@ -514,7 +514,7 @@ if ($AutoInstallASDK)
     if (!($AsdkFileList))
     {
         $AsdkFileList = @("AzureStackDevelopmentKit.exe")
-        1..11 | ForEach-Object {$AsdkFileList += "AzureStackDevelopmentKit-$_" + ".bin"}
+        1..10 | ForEach-Object {$AsdkFileList += "AzureStackDevelopmentKit-$_" + ".bin"}
     }
     [ValidateSet("AAD", "ADFS")][string]$deploymentType = "AAD"
 
