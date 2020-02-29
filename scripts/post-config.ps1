@@ -108,6 +108,11 @@ DownloadWithRetry -Uri "$branchFullPath/scripts/Install-ASDK.ps1" -DownloadLocat
 #Download MSFT Edge Enterprise MSI (installer)
 DownloadWithRetry -Uri "$branchFullPath/files/MicrosoftEdgeEnterpriseX64.msi" -DownloadLocation "$defaultLocalPath\MicrosoftEdgeEnterpriseX64.msi"
 
+#Download MSDocs Azure Stack Development Kit PDF
+$BasePath = "$($env:ALLUSERSPROFILE)\Desktop\AzStack Docs"
+if ([System.IO.Directory]::Exists($BasePath) -ne $TRUE) { [System.IO.Directory]::CreateDirectory($BasePath) }
+DownloadWithRetry -Uri "$branchFullPath/files/MSDocs-ASDK-28FEB2020.pdf" -DownloadLocation "$defaultLocalPath\AzStackDocs\MSDocs-ASDK-28FEB2020.pdf"
+
 #Download and extract Mobaxterm
 DownloadWithRetry -Uri "https://aka.ms/mobaxtermLatest" -DownloadLocation "$defaultLocalPath\Mobaxterm.zip"
 Expand-Archive -Path "$defaultLocalPath\Mobaxterm.zip" -DestinationPath "$defaultLocalPath\Mobaxterm"
@@ -615,12 +620,6 @@ if ([System.IO.File]::Exists($MSI) -eq $TRUE)
         Write-Log @writeLogParams -Message "Installation finished"
     }
 }
-
-$AzStackDocURI = 'https://opdhsblobprod04.blob.core.windows.net/contents/6aecb106c9424c12ae45f4e8da9858c3/07c02d50b77b804ca280195f331185fc?sv=2015-04-05&sr=b&sig=gAS%2F6nW%2FBIf1F%2FHHrKZgE6aG2FmH%2F8AnPHqnBiQ6O38%3D&st=2020-02-26T13%3A27%3A48Z&se=2020-02-27T13%3A37%3A48Z&sp=r'
-$BasePath = "$($env:ALLUSERSPROFILE)\Desktop\AzStack Docs"
-if ([System.IO.Directory]::Exists($BasePath) -ne $TRUE) { [System.IO.Directory]::CreateDirectory($BasePath) }
-$FilePath = "$($BasePath)\MSFTDocs - Azure Stack Hub - $((Get-Date -Format ddMMMyy).ToUpperInvariant()).pdf"
-if ([System.IO.File]::Exists($FilePath) -ne $TRUE) { [io.file]::WriteAllBytes($FilePath,(Invoke-WebRequest -URI "$($AzStackDocURI)").content) }
 
 Stop-Transcript
 
