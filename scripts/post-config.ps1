@@ -109,9 +109,7 @@ DownloadWithRetry -Uri "$branchFullPath/scripts/Install-ASDK.ps1" -DownloadLocat
 DownloadWithRetry -Uri "$branchFullPath/files/MicrosoftEdgeEnterpriseX64.msi" -DownloadLocation "$defaultLocalPath\MicrosoftEdgeEnterpriseX64.msi"
 
 #Download MSDocs Azure Stack Development Kit PDF
-$BasePath = "$($env:ALLUSERSPROFILE)\Desktop\AzStack Docs"
-if ([System.IO.Directory]::Exists($BasePath) -ne $TRUE) { [System.IO.Directory]::CreateDirectory($BasePath) }
-DownloadWithRetry -Uri "$branchFullPath/files/MSDocs-ASDK-28FEB2020.pdf" -DownloadLocation "$defaultLocalPath\AzStackDocs\MSDocs-ASDK-28FEB2020.pdf"
+DownloadWithRetry -Uri "$branchFullPath/files/MSDocs-ASDK-28FEB2020.pdf" -DownloadLocation "$defaultLocalPath\MSDocs-ASDK-28FEB2020.pdf"
 
 #Download and extract Mobaxterm
 DownloadWithRetry -Uri "https://aka.ms/mobaxtermLatest" -DownloadLocation "$defaultLocalPath\Mobaxterm.zip"
