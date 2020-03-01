@@ -149,7 +149,7 @@ if ($ASDKConfiguratorObject)
             $ASDKConfiguratorParams.Add("downloadPath", "D:\ASDKfiles")
         }
 
-        if ($ASDKConfiguratorParams.AzureADUsername -match '<|>' -or $ASDKConfiguratorParams.azureDirectoryTenantName -match '<|>' -or $ASDKConfiguratorParams.azureStackAdminPwd -match '<|>' -or $ASDKConfiguratorParams.VMpwd -match '<|>' -or $ASDKConfiguratorParams.azureAdPwd -match '<|>')
+        if ($ASDKConfiguratorParams.AzureADUsername -match '<|>' -or $ASDKConfiguratorParams.azureDirectoryTenantName -match '<|>' -or $ASDKConfiguratorParams.asdkHostPwd -match '<|>' -or $ASDKConfiguratorParams.VMpwd -match '<|>' -or $ASDKConfiguratorParams.azureAdPwd -match '<|>')
         {
             $AsdkConfigurator.Autorun = "false"
             #$AsdkConfigurator.Add("Autorun", "false")
@@ -180,38 +180,53 @@ if ($ASDKConfiguratorObject)
 
         $paramsString = $paramsArray -join " "
 
-        $commandsToRun = "$(Join-Path -Path $AsdkConfigurator.path -ChildPath "ConfigASDK.ps1") $paramsString"
+        #$commandsToRun = "$(Join-Path -Path $AsdkConfigurator.path -ChildPath "ConfigASDK.ps1") $paramsString"
+        $commandsToRun = "$(Join-Path -Path $AsdkConfigurator.path -ChildPath $AsdkConfigurator.command) $paramsString"
 
         if ($AsdkConfigurator.Autorun -eq 'true')
         {
             #create download folder
             New-Item -ItemType Directory -Path $ASDKConfiguratorParams.downloadPath -Force -Verbose
             New-Item -ItemType Directory -Path (Join-Path -Path $ASDKConfiguratorParams.downloadPath -ChildPath ASDK) -Force -Verbose
+            New-Item -ItemType Directory -Path $AsdkConfigurator.path -Force -Verbose
 
             #download configurator
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            Invoke-Webrequest http://aka.ms/configasdk -UseBasicParsing -OutFile (Join-Path -Path $AsdkConfigurator.path -ChildPath ConfigASDK.ps1) -Verbose
-
+            #Invoke-Webrequest http://aka.ms/configasdk -UseBasicParsing -OutFile (Join-Path -Path $AsdkConfigurator.path -ChildPath ConfigASDK.ps1) -Verbose
+            Invoke-Webrequest $AsdkConfigurator.AzSPoCURL -UseBasicParsing -OutFile (Join-Path -Path $AsdkConfigurator.path -ChildPath $AsdkConfigurator.command) -Verbose
+            
             #download iso files
             if ($ASDKConfiguratorParams.IsoPath2019)
             {
                 DownloadWithRetry -Uri https://software-download.microsoft.com/download/pr/17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso -DownloadLocation $ASDKConfiguratorParams.IsoPath2019
             }
+
             if ($ASDKConfiguratorParams.IsoPath)
             {
                 DownloadWithRetry -Uri http://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -DownloadLocation $ASDKConfiguratorParams.IsoPath
             }
 
-            $commandsToRun |  Out-File -FilePath (Join-Path -Path $defaultLocalPath -ChildPath Run-ConfigASDK.ps1)  -Encoding ASCII
+            #$commandsToRun |  Out-File -FilePath (Join-Path -Path $defaultLocalPath -ChildPath Run-ConfigASDK.ps1)  -Encoding ASCII
+            $commandsToRun |  Out-File -FilePath (Join-Path -Path $defaultLocalPath -ChildPath Run-ConfigASDK.ps1) -Encoding ASCII
         }
 
         if ($AsdkConfigurator.Autorun -eq 'false') 
         {
+<#
             $script = @"
 Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
 New-Item -ItemType Directory -Path $($ASDKConfiguratorParams.downloadPath) -Force -Verbose
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-Webrequest http://aka.ms/configasdk -UseBasicParsing -OutFile $($AsdkConfigurator.path)\ConfigASDK.ps1 -Verbose
+
+"@
+#>
+
+$script = @"
+Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
+New-Item -ItemType Directory -Path $($ASDKConfiguratorParams.downloadPath) -Force -Verbose
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-Webrequest $($AsdkConfigurator.AzSPoCURL) -UseBasicParsing -OutFile $($AsdkConfigurator.path)\$($AsdkConfigurator.command) -Verbose
 
 "@
 
@@ -510,7 +525,7 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 }
 
 Rename-LocalUser -Name $username -NewName Administrator
-Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.localpw | ConvertTo-SecureString -AsPlainText -Force)
+Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.VMpwd | ConvertTo-SecureString -AsPlainText -Force)
 
 if ($AutoInstallASDK)
 {

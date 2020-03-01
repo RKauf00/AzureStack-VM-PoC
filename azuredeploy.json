@@ -180,22 +180,20 @@
         "ASDKConfiguratorObject": {
             "type": "secureObject",
             "defaultValue": {
-                "command": "configASDK.ps1",
-                "path": "c:\\ConfigASDK",
+                "command": "AzSPoC.ps1",
+                "path": "c:\\AzSPoC",
                 "AutoRun": "true",
+                "AzSPoCURL": "http://bit.ly/AzSPoC",
                 "ASDKConfiguratorParams": {
                     "azureDirectoryTenantName": "[parameters('AzureADTenant')]",
                     "authenticationType": "AzureAD",
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
+                    "IsoPath2019": "D:\\WS2019EVALISO.iso",
+                    "VMpwd": "[variable('localPw')]",
+                    "asdkHostPwd": "[variable('localPw')]",
                     "AzureADUsername": "[parameters('AzureADGlobalAdmin')]",
-                    "VMpwd": "[parameters('adminPassword')]",
-                    "azureStackAdminPwd": "[parameters('adminPassword')]",
                     "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]",
-                    "registerASDK": "true",
-                    "useAzureCredsForRegistration":"true",
-                    "azureRegSubId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                    "localpw": "[concat(parameters('AgencyName'), '*', parameters('DeparatmentName'), '^', parameters('AdminInitials'), '_135!#%')]"
                 }
             }
         },
@@ -241,7 +239,8 @@
         "publicIpAddressName": "[concat(parameters('virtualMachineName'),'-IP')]",
         "singleQuote": "'",
         "autoInstallASDKparameters": "[if(bool(parameters('autoInstallASDK')), concat(' -AutoInstallASDK ',' -AzureADTenant ', parameters('AzureADTenant'), ' -AzureADGlobalAdmin ', parameters('AzureADGlobalAdmin'), ' -AzureADGlobalAdminPass ', parameters('AzureADGlobalAdminPassword'), ' -LocalAdminPass ', parameters('adminPassword')), '')]",
-        "ASDKConfiguratorParameters": "[concat(' -ASDKConfiguratorObject ', variables('singleQuote'), replace(replace(string(parameters('ASDKConfiguratorObject')), '\\', '\\\\'), '\"', '\\\"'), variables('singleQuote'))]"
+        "ASDKConfiguratorParameters": "[concat(' -ASDKConfiguratorObject ', variables('singleQuote'), replace(replace(string(parameters('ASDKConfiguratorObject')), '\\', '\\\\'), '\"', '\\\"'), variables('singleQuote'))]",
+        "localPw": "[concat(parameters('AgencyName'), '*', parameters('DeparatmentName'), '^', parameters('AdminInitials'), '_135!#%')]"
     },
     "resources" : [
         {
