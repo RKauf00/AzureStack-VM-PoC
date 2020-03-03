@@ -188,11 +188,11 @@
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
                     "IsoPath2019": "D:\\WS2019EVALISO.iso",
-                    "VMpwd": "[variables('localPw')]",
-                    "asdkHostPwd": "[variables('localPw')]",
+                    "VMpwd": "[concat(parameters('AgencyName'), '*', parameters('DeparatmentName'), '^', parameters('AdminInitials'), '_135!#%')]",
+                    "asdkHostPwd": "[concat(parameters('AgencyName'), '*', parameters('DeparatmentName'), '^', parameters('AdminInitials'), '_135!#%')]",
                     "AzureADUsername": "[parameters('AzureADGlobalAdmin')]",
                     "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]"
-                }
+               }
             }
         },
         "enableRDSH": {
@@ -237,8 +237,7 @@
         "publicIpAddressName": "[concat(parameters('virtualMachineName'),'-IP')]",
         "singleQuote": "'",
         "autoInstallASDKparameters": "[if(bool(parameters('autoInstallASDK')), concat(' -AutoInstallASDK ',' -AzureADTenant ', parameters('AzureADTenant'), ' -AzureADGlobalAdmin ', parameters('AzureADGlobalAdmin'), ' -AzureADGlobalAdminPass ', parameters('AzureADGlobalAdminPassword'), ' -LocalAdminPass ', parameters('adminPassword')), '')]",
-        "ASDKConfiguratorParameters": "[concat(' -ASDKConfiguratorObject ', variables('singleQuote'), replace(replace(string(parameters('ASDKConfiguratorObject')), '\\', '\\\\'), '\"', '\\\"'), variables('singleQuote'))]",
-        "localPw": "[concat(parameters('AgencyName'), '*', parameters('DeparatmentName'), '^', parameters('AdminInitials'), '_135!#%')]"
+        "ASDKConfiguratorParameters": "[concat(' -ASDKConfiguratorObject ', variables('singleQuote'), replace(replace(string(parameters('ASDKConfiguratorObject')), '\\', '\\\\'), '\"', '\\\"'), variables('singleQuote'))]"
     },
     "resources" : [
         {
