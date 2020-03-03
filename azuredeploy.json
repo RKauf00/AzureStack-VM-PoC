@@ -188,8 +188,8 @@
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
                     "IsoPath2019": "D:\\WS2019EVALISO.iso",
-                    "VMpwd": "[variable('localPw')]",
-                    "asdkHostPwd": "[variable('localPw')]",
+                    "VMpwd": "[variables('localPw')]",
+                    "asdkHostPwd": "[variables('localPw')]",
                     "AzureADUsername": "[parameters('AzureADGlobalAdmin')]",
                     "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]"
                 }
