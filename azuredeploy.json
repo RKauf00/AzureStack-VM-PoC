@@ -1,9 +1,9 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualMachineName": {
-            "defaultValue": "AzS-HOST1",
+            "defaultValue": "AzS-HOST",
             "type": "string",
             "metadata": {
                 "name": "Virtual Machine Name"
@@ -69,10 +69,9 @@
             }
         },
         "adminPassword": {
-            "defaultValue": "D)NTuseD#F@ULTp@s$wordz",
             "type": "securestring",
             "metadata": {
-                "name": "Admin Password"
+                "description": "Virtual Machine Password"
             }
         },
         "addressPrefix": {
@@ -144,21 +143,20 @@
         },
         "AzureADGlobalAdmin": {
             "defaultValue": "<alias>@<AzureADTenant>.onmicrosoft.com",
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "name": "Azure AD Gloabl Admin (UPN Format)"
             }
         },
         "AzureADGlobalAdminPassword": {
-            "defaultValue": "1234",
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "name": "Azure AD Global Admin Password"
             }
         },
         "AgencyName": {
             "type": "string",
-            "defaultValue": "MSFT",
+            "defaultValue": "XYZ",
             "metadata": {
                 "name": "Company/Agency Name"
             }
@@ -172,7 +170,7 @@
         },
         "AdminInitials": {
             "type": "string",
-            "defaultValue": "RWK",
+            "defaultValue": "XXX",
             "metadata": {
                 "name": "Administrators Initials"
             }
@@ -193,7 +191,7 @@
                     "VMpwd": "[variable('localPw')]",
                     "asdkHostPwd": "[variable('localPw')]",
                     "AzureADUsername": "[parameters('AzureADGlobalAdmin')]",
-                    "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]",
+                    "azureAdPwd": "[parameters('AzureADGlobalAdminPassword')]"
                 }
             }
         },

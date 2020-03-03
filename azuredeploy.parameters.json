@@ -1,12 +1,12 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
        "virtualMachineName": {
              "value": "AzStackHost"
         },
        "virtualMachineSize": {
-            "value": "Standard_E48s_v3"
+            "value": "Standard_E32s_v3"
         },
         "dataDiskSizeinGB": {
             "value": 1024
@@ -18,10 +18,10 @@
             "value": "AzureStack-VNET"
         },
         "adminUsername": {
-            "value": "AzStackAdmin"
+            "value": "<VM Local Admin>"
         },
         "adminPassword": {
-            "value": "D)NTuseD#F@ULTp@s$wordz"
+            "value": "<VM Password>"
         },
         "addressPrefix": {
             "value": "10.0.0.0/24"
@@ -39,7 +39,7 @@
             "value": "azstackdev"
         },
         "autoDownloadASDK": {
-            "value": false
+            "value": true
         },
         "autoInstallASDK": {
             "value": false
@@ -57,7 +57,7 @@
             "value": false
         },
         "siteLocation": {
-            "value": "usgovtexas"
+            "value": "<Azure Region>"
         }
     }
 }

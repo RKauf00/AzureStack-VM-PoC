@@ -73,13 +73,11 @@
     if ($AzEnv)
     {
         Connect-AzAccount -Environment $AzEnv
-        #Connect-AzAccount -TenantId $tenantID -Subscription $subscriptionID -Environment $AzEnv
         [ValidateSet("usgovvirginia","usgoviowa","usdodeast","usdodcentral","usgovtexas","usgovarizona")] [string] $location = $Location
     }
     else
     {
         Connect-AzAccount
-        #Connect-AzAccount -TenantId $tenantID -Subscription $subscriptionID
         [ValidateSet("eastasia","southeastasia","centralus","eastus","eastus2","westus","northcentralus","southcentralus","northeurope","westeurope","japanwest","japaneast","bazilsouth","australiaeast","australiasoutheast","southindia","centralindia","westindia","canadacentral","canadaeast","uksouth","ukwest","westcentralus","wstus2","koreacentral","koreasouth","francecentral","francesouth","australiacentral","australiacentral2","uaecentral","uaenorth","southafricanorth","southaricawest","switzerlandnorth","switzerlandwest","germanynorth","germanywestcentral","norwaywest","norwayeast")][string]$location = $Location
     }
 
@@ -110,32 +108,21 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
     #[string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
-
-        <#----#>
-    <#----#>
 <#----#>
 <#----#>            [String] $AzureADTenant            =  'Azure-Stack.us'
 <#----#>
-    <#----#>
-        <#----#>
-
     [string] $siteLocation             =  $Location                              #"usgovtexas"
     [string] $resourceGroupNamePrefix  =  'AzStackPOC'                           # Resource Group Name Prefix
     [string] $resourceGroupName        =  "$($resourceGroupNamePrefix)-$($instanceNumber)"
     #[string] $AzureADGlobalAdmin       =  Read-Host "Azure AD Global Admin account UPN"
-
-        <#----#>
-    <#----#>
 <#----#>
 <#----#>                [String] $AzureADGlobalAdmin       =  'AzStackHostAdmin@Azure-Stack.us'
 <#----#>
-    <#----#>
-        <#----#>
 
     # Set Azure VM Values
     [String] $adminUsername            =  'AzStackAdmin'                          # VM Admin User Name
@@ -159,17 +146,12 @@
     [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
-    #[String] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
-    #[String] $AzureADGlobalAdminPassword  =  Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
-
-        <#----#>
-    <#----#>
+    #[SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
+    #[SecureString] $AzureADGlobalAdminPassword  =  Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
 <#----#>
-<#----#>            [String] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
-<#----#>            [String] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO' | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
+<#----#>            [SecureString] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO' | ConvertTo-SecureString -AsPlainText -Force
 <#----#>
-    <#----#>
-        <#----#>
 
 
 # Create ARM Template Parameter Object
