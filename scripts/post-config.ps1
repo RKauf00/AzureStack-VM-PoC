@@ -525,7 +525,7 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 }
 
 Rename-LocalUser -Name $username -NewName Administrator
-Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.VMpwd | ConvertTo-SecureString -AsPlainText -Force)
+#Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.VMpwd | ConvertTo-SecureString -AsPlainText -Force)
 
 if ($AutoInstallASDK)
 {
