@@ -154,27 +154,6 @@
                 "name": "Azure AD Global Admin Password"
             }
         },
-        "AgencyName": {
-            "type": "string",
-            "defaultValue": "XYZ",
-            "metadata": {
-                "name": "Company/Agency Name"
-            }
-        },
-        "DeparatmentName": {
-            "type": "string",
-            "defaultValue": "TestDev",
-            "metadata": {
-                "name": "Administrator Department Name"
-            }
-        },
-        "AdminInitials": {
-            "type": "string",
-            "defaultValue": "XXX",
-            "metadata": {
-                "name": "Administrators Initials"
-            }
-        },
         "ASDKConfiguratorObject": {
             "type": "secureObject",
             "defaultValue": {
@@ -254,7 +233,7 @@
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
                     "windowsConfiguration": {
-                        "provisionVmAgent": "true"
+                        "provisionVmAgent": true
                     }
                 },
                 "hardwareProfile": {

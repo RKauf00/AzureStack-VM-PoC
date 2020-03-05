@@ -143,7 +143,7 @@
 
     # Enable / Disable ASDK Auto-Download and Auto-Install
     [bool]   $autoDownloadASDK         =  $TRUE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
-    [bool]   $autoInstallASDK          =  $TRUE                                   # $TRUE or $FALSE
+    [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
     #[SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
