@@ -2,7 +2,6 @@ Param (
     [Parameter(Mandatory = $true)]
     [string]
     $Username = "AzStackAdmin",
-    #$Username = "__administrator",
 
     [string]
     $LocalAdminUsername = "AzStackLocalAdmin",
@@ -384,7 +383,8 @@ if ($AzureImage)
             $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS}"
             $Shortcut.Save()
         }
-        $downloadASDK = $null
+
+        #$downloadASDK = $null
     }
     else
     {
@@ -482,7 +482,7 @@ if ($AzureImage)
                 $Shortcut.Save()
             }
         }
-        $downloadASDK = "-DownloadASDK"
+        #$downloadASDK = "-DownloadASDK"
     }
 
     # Enable differencing roles from ASDKImage except .NET framework 3.5
@@ -532,7 +532,7 @@ if ($AutoInstallASDK -ne $TRUE)
     $secpasswd = ConvertTo-SecureString "$($ASDKConfiguratorParams.azureAdPwd)" -AsPlainText -Force
     $InfraAzureDirectoryTenantAdminCredential = New-Object System.Management.Automation.PSCredential ("$($ASDKConfiguratorParams.AzureADUsername)@$($ASDKConfiguratorParams.azureDirectoryTenantName)", $secpasswd)
 
-    powershell.exe -ExecutionPolicy Unrestricted -NoExit -File "$(defaultLocalPath)\Install-ASDK.ps1 -LocalAdminUsername 'administrator' -LocalAdminPass $(ConvertTo-SecureString "$($ASDKConfiguratorParams.VMpwd)" -AsPlainText -Force) -AADTenant $ASDKConfiguratorParams.azureDirectoryTenantName -DeploymentType = 'AAD' -InfraAzureDirectoryTenantAdminCredential $InfraAzureDirectoryTenantAdminCredential -Version $($version)"
+    powershell.exe -ExecutionPolicy Unrestricted -NoExit -File "$($defaultLocalPath)\Install-ASDK.ps1 -LocalAdminUsername 'administrator' -LocalAdminPass $(ConvertTo-SecureString "$($ASDKConfiguratorParams.VMpwd)" -AsPlainText -Force) -AADTenant $ASDKConfiguratorParams.azureDirectoryTenantName -DeploymentType = 'AAD' -InfraAzureDirectoryTenantAdminCredential $InfraAzureDirectoryTenantAdminCredential -Version $($version)"
 }
 
 <#
