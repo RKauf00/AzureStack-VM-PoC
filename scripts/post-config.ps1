@@ -636,13 +636,15 @@ if ([System.IO.File]::Exists($MSI) -eq $TRUE)
     }
 }
 
-if (!($AutoInstallASDK))
-{
+#if (!($AutoInstallASDK))
+#{
     $secpasswd = ConvertTo-SecureString "$($ASDKConfiguratorParams.azureAdPwd)" -AsPlainText -Force
     $InfraAzureDirectoryTenantAdminCredential = New-Object System.Management.Automation.PSCredential ("$($ASDKConfiguratorParams.AzureADUsername)@$($ASDKConfiguratorParams.azureDirectoryTenantName)", $secpasswd)
 
+    Write-Log @writeLogParams -Message "Calling $($defaultLocalPath)\Install-ASDK.ps1"
     powershell.exe -ExecutionPolicy Unrestricted -NoExit -File "$($defaultLocalPath)\Install-ASDK.ps1 -LocalAdminUsername 'administrator' -LocalAdminPass $(ConvertTo-SecureString $($ASDKConfiguratorParams.VMpwd) -AsPlainText -Force) -AADTenant $ASDKConfiguratorParams.azureDirectoryTenantName -DeploymentType = 'AAD' -InfraAzureDirectoryTenantAdminCredential $InfraAzureDirectoryTenantAdminCredential -Version $($version)"
-}
+    Write-Log @writeLogParams -Message "Installing $($File.BaseName)"
+#}
 
 Stop-Transcript
 

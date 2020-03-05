@@ -88,7 +88,12 @@
     $Subscription = Get-AzSubscription
 
     # Evaluate Azure Subscription Data
-    if ($Subscription.Id.Count -gt 1)
+    if (!($Subscription))
+    {
+        return Write-Host 'Failed to connect to AzAccount; exiting'
+        break ; break
+    }
+    elseif ($Subscription.Id.Count -gt 1)
     {
         $Count             =    0
         $Choice            =    Read-Host "Select Subscription`n $( foreach ($S in $Subscription.Id) { "$($Count): $S`n" ; $Count ++ } )"
@@ -108,7 +113,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  14                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  16                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
