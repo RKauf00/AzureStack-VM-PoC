@@ -159,34 +159,6 @@
 <#----#>
 
 
-# Create ARM Template Parameter Object
-
-    # Purge templateParameterObject Variable
-    Remove-Variable templateParameterObject -ErrorAction SilentlyContinue
-
-    # Build templateParameterObject Variable
-    $templateParameterObject=@{}
-    $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
-    $templateParameterObject.Add("siteLocation",$siteLocation)
-    $templateParameterObject.Add("AzureADGlobalAdmin",$AzureADGlobalAdmin)
-    $templateParameterObject.Add("adminUsername",$adminUsername)
-    $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
-    $templateParameterObject.Add("virtualMachineName",$virtualMachineName)
-    $templateParameterObject.Add("virtualMachineSize",$virtualMachineSize)
-    $templateParameterObject.Add("dataDiskSizeinGB",$dataDiskSizeinGB)
-    $templateParameterObject.Add("dataDiskCount",$dataDiskCount)
-    $templateParameterObject.Add("enableRDSH",$enableRDSH)
-    $templateParameterObject.Add("virtualNetworkName",$virtualNetworkName)
-    $templateParameterObject.Add("addressPrefix",$addressPrefix)
-    $templateParameterObject.Add("subnetName",$subnetName)
-    $templateParameterObject.Add("subnetPrefix",$subnetPrefix)
-    $templateParameterObject.Add("publicDnsName",$publicDnsName.ToLower())
-    $templateParameterObject.Add("publicIpAddressType",$publicIpAddressType)
-    $templateParameterObject.Add("autoDownloadASDK",$autoDownloadASDK)
-    $templateParameterObject.Add("autoInstallASDK",$autoInstallASDK)
-    $templateParameterObject.Add("AzureADGlobalAdminPassword",$AzureADGlobalAdminPassword)
-
-
 # Create Resource Group
 
     New-AzResourceGroup -Name $resourceGroupName -Location $Location
@@ -196,6 +168,33 @@
 
     if ($UseParamObject -eq $TRUE)
     {
+        # Create ARM Template Parameter Object
+
+        ## Purge templateParameterObject Variable
+        Remove-Variable templateParameterObject -ErrorAction SilentlyContinue
+
+        ## Build templateParameterObject Variable
+        $templateParameterObject=@{}
+        $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
+        $templateParameterObject.Add("siteLocation",$siteLocation)
+        $templateParameterObject.Add("AzureADGlobalAdmin",$AzureADGlobalAdmin)
+        $templateParameterObject.Add("adminUsername",$adminUsername)
+        $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
+        $templateParameterObject.Add("virtualMachineName",$virtualMachineName)
+        $templateParameterObject.Add("virtualMachineSize",$virtualMachineSize)
+        $templateParameterObject.Add("dataDiskSizeinGB",$dataDiskSizeinGB)
+        $templateParameterObject.Add("dataDiskCount",$dataDiskCount)
+        $templateParameterObject.Add("enableRDSH",$enableRDSH)
+        $templateParameterObject.Add("virtualNetworkName",$virtualNetworkName)
+        $templateParameterObject.Add("addressPrefix",$addressPrefix)
+        $templateParameterObject.Add("subnetName",$subnetName)
+        $templateParameterObject.Add("subnetPrefix",$subnetPrefix)
+        $templateParameterObject.Add("publicDnsName",$publicDnsName.ToLower())
+        $templateParameterObject.Add("publicIpAddressType",$publicIpAddressType)
+        $templateParameterObject.Add("autoDownloadASDK",$autoDownloadASDK)
+        $templateParameterObject.Add("autoInstallASDK",$autoInstallASDK)
+        $templateParameterObject.Add("AzureADGlobalAdminPassword",$AzureADGlobalAdminPassword)
+
         # Use ARM Template Parameters Object
         New-AzResourceGroupDeployment `
             -Name "$resourceGroupName-POC-Deployment" `

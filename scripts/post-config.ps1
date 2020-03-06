@@ -353,9 +353,6 @@ if ($AzureImage)
         if (!($AutoInstallASDK))
         {
 
-        <#----#>
-    <#----#>
-<#----#>
             Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
             $WshShell = New-Object -comObject WScript.Shell
             $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
@@ -363,9 +360,6 @@ if ($AzureImage)
             $Shortcut.WorkingDirectory = "$defaultLocalPath"
             $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
             $Shortcut.Save()
-<#----#>
-    <#----#>
-        <#----#>
 
             Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
             $WshShell = New-Object -comObject WScript.Shell
@@ -394,9 +388,6 @@ if ($AzureImage)
             if ($EnableDownloadASDK)
             {
 
-        <#----#>
-    <#----#>
-<#----#>
                 Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
                 $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
@@ -404,9 +395,6 @@ if ($AzureImage)
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
                 $Shortcut.Save()
-<#----#>
-    <#----#>
-        <#----#>
 
                 Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
@@ -443,9 +431,6 @@ if ($AzureImage)
             else
             {
 
-        <#----#>
-    <#----#>
-<#----#>
                 Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
                 $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
@@ -453,9 +438,6 @@ if ($AzureImage)
                 $Shortcut.WorkingDirectory = "$defaultLocalPath"
                 $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
                 $Shortcut.Save()
-<#----#>
-    <#----#>
-        <#----#>
 
                 Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
                 $WshShell = New-Object -comObject WScript.Shell
@@ -635,16 +617,6 @@ if ([System.IO.File]::Exists($MSI) -eq $TRUE)
         Write-Log @writeLogParams -Message "Installation finished"
     }
 }
-
-#if (!($AutoInstallASDK))
-#{
-    $secpasswd = ConvertTo-SecureString "$($ASDKConfiguratorParams.azureAdPwd)" -AsPlainText -Force
-    $InfraAzureDirectoryTenantAdminCredential = New-Object System.Management.Automation.PSCredential ("$($ASDKConfiguratorParams.AzureADUsername)@$($ASDKConfiguratorParams.azureDirectoryTenantName)", $secpasswd)
-
-    Write-Log @writeLogParams -Message "Calling $($defaultLocalPath)\Install-ASDK.ps1"
-    powershell.exe -ExecutionPolicy Unrestricted -NoExit -File "$($defaultLocalPath)\Install-ASDK.ps1 -LocalAdminUsername 'administrator' -LocalAdminPass $(ConvertTo-SecureString $($ASDKConfiguratorParams.VMpwd) -AsPlainText -Force) -AADTenant $ASDKConfiguratorParams.azureDirectoryTenantName -DeploymentType = 'AAD' -InfraAzureDirectoryTenantAdminCredential $InfraAzureDirectoryTenantAdminCredential -Version $($version)"
-    Write-Log @writeLogParams -Message "Installing $($File.BaseName)"
-#}
 
 Stop-Transcript
 
