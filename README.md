@@ -1,5 +1,3 @@
-<a href="https://raw.githubusercontent.com/rkauf00/AzureStack-VM-PoC/master/media/PAM-Role-Usage.mp4" target="_blank"><img src="https://img.youtube.com/vi/HUBNt18RFbo/0.jpg" alt="Markdown Crash Course" width="240" height="160" border="3" /></a>
-
 # Azure Stack on Azure VM
 Creates a new VM and installs prerequisites to install AzureStack Development kit (ASDK) to run PoC
 
