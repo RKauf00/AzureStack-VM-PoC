@@ -89,7 +89,7 @@
 
     # Evaluate Azure Subscription Data
     if (!($Subscription))
-    {
+    {rikauf
         return Write-Host 'Failed to connect to AzAccount; exiting'
         break ; break
     }
@@ -113,7 +113,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  16                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -147,8 +147,6 @@
     [string] $publicIpAddressType      =  'Dynamic'
 
     # Enable / Disable ASDK Auto-Download and Auto-Install
-    [bool]   $autoDownloadASDK         =  $TRUE                                   # $TRUE or $FALSE; $TRUE adds ~35 mins to deployment time
-    [bool]   $autoInstallASDK          =  $FALSE                                   # $TRUE or $FALSE
 
     # Set Administrator Passwords
     #[SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
@@ -191,8 +189,6 @@
         $templateParameterObject.Add("subnetPrefix",$subnetPrefix)
         $templateParameterObject.Add("publicDnsName",$publicDnsName.ToLower())
         $templateParameterObject.Add("publicIpAddressType",$publicIpAddressType)
-        $templateParameterObject.Add("autoDownloadASDK",$autoDownloadASDK)
-        $templateParameterObject.Add("autoInstallASDK",$autoInstallASDK)
         $templateParameterObject.Add("AzureADGlobalAdminPassword",$AzureADGlobalAdminPassword)
 
         # Use ARM Template Parameters Object
