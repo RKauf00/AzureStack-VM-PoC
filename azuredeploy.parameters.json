@@ -38,12 +38,6 @@
         "publicDnsName": {
             "value": "azstackdev"
         },
-        "autoDownloadASDK": {
-            "value": true
-        },
-        "autoInstallASDK": {
-            "value": false
-        },
         "AzureADTenant": {
             "value": "<tenant>.onmicrosoft.com"
         },
@@ -61,3 +55,4 @@
         }
     }
 }
+ 
