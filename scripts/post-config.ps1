@@ -21,9 +21,6 @@ Param (
     [string]
     $EnableRDSH,
 
-    [switch]
-    $AutoInstallASDK,
-
     [string]
     $AzureADTenant,
 

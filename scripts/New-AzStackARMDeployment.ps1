@@ -146,8 +146,6 @@
     [string] $publicDnsName            =  "$($publicDnsNamePrefix)$($instanceNumber)"
     [string] $publicIpAddressType      =  'Dynamic'
 
-    # Enable / Disable ASDK Auto-Download and Auto-Install
-
     # Set Administrator Passwords
     #[SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
     #[SecureString] $AzureADGlobalAdminPassword  =  Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
