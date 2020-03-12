@@ -135,7 +135,6 @@ if ($ASDKConfiguratorObject)
 
     if ($?)
     {
-        
         $ASDKConfiguratorParams = $AsdkConfigurator.ASDKConfiguratorParams | ConvertTo-HashtableFromPsCustomObject
 
         if (!(Test-Path 'C:\Temp'))
@@ -146,12 +145,6 @@ if ($ASDKConfiguratorObject)
         if (!($ASDKConfiguratorParams.downloadPath))
         {
             $ASDKConfiguratorParams.Add("downloadPath", "D:\ASDKfiles")
-        }
-
-        if ($ASDKConfiguratorParams.AzureADUsername -match '<|>' -or $ASDKConfiguratorParams.azureDirectoryTenantName -match '<|>' -or $ASDKConfiguratorParams.asdkHostPwd -match '<|>' -or $ASDKConfiguratorParams.VMpwd -match '<|>' -or $ASDKConfiguratorParams.azureAdPwd -match '<|>')
-        {
-            $AsdkConfigurator.Autorun = "false"
-            #$AsdkConfigurator.Add("Autorun", "false")
         }
 
         #create configasdk folder
@@ -179,107 +172,37 @@ if ($ASDKConfiguratorObject)
 
         $paramsString = $paramsArray -join " "
 
-        #$commandsToRun = "$(Join-Path -Path $AsdkConfigurator.path -ChildPath "ConfigASDK.ps1") $paramsString"
         $commandsToRun = "$(Join-Path -Path $AsdkConfigurator.path -ChildPath $AsdkConfigurator.command) $paramsString"
 
-        if ($AsdkConfigurator.Autorun -eq 'true')
+        #create download folder
+        New-Item -ItemType Directory -Path $ASDKConfiguratorParams.downloadPath -Force -Verbose
+        New-Item -ItemType Directory -Path (Join-Path -Path $ASDKConfiguratorParams.downloadPath -ChildPath ASDK) -Force -Verbose
+        New-Item -ItemType Directory -Path $AsdkConfigurator.path -Force -Verbose
+
+        #download configurator
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        #Invoke-Webrequest http://aka.ms/configasdk -UseBasicParsing -OutFile (Join-Path -Path $AsdkConfigurator.path -ChildPath ConfigASDK.ps1) -Verbose
+        Invoke-Webrequest $AsdkConfigurator.AzSPoCURL -UseBasicParsing -OutFile (Join-Path -Path $AsdkConfigurator.path -ChildPath $AsdkConfigurator.command) -Verbose
+        
+        #download iso files
+        if ($ASDKConfiguratorParams.IsoPath2019)
         {
-            #create download folder
-            New-Item -ItemType Directory -Path $ASDKConfiguratorParams.downloadPath -Force -Verbose
-            New-Item -ItemType Directory -Path (Join-Path -Path $ASDKConfiguratorParams.downloadPath -ChildPath ASDK) -Force -Verbose
-            New-Item -ItemType Directory -Path $AsdkConfigurator.path -Force -Verbose
-
-            #download configurator
-            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            #Invoke-Webrequest http://aka.ms/configasdk -UseBasicParsing -OutFile (Join-Path -Path $AsdkConfigurator.path -ChildPath ConfigASDK.ps1) -Verbose
-            Invoke-Webrequest $AsdkConfigurator.AzSPoCURL -UseBasicParsing -OutFile (Join-Path -Path $AsdkConfigurator.path -ChildPath $AsdkConfigurator.command) -Verbose
-            
-            #download iso files
-            if ($ASDKConfiguratorParams.IsoPath2019)
-            {
-                DownloadWithRetry -Uri https://software-download.microsoft.com/download/pr/17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso -DownloadLocation $ASDKConfiguratorParams.IsoPath2019
-            }
-
-            if ($ASDKConfiguratorParams.IsoPath)
-            {
-                DownloadWithRetry -Uri http://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -DownloadLocation $ASDKConfiguratorParams.IsoPath
-            }
-
-            #$commandsToRun |  Out-File -FilePath (Join-Path -Path $defaultLocalPath -ChildPath Run-ConfigASDK.ps1)  -Encoding ASCII
-            $commandsToRun |  Out-File -FilePath (Join-Path -Path $defaultLocalPath -ChildPath Run-ConfigASDK.ps1) -Encoding ASCII
+            DownloadWithRetry -Uri https://software-download.microsoft.com/download/pr/17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso -DownloadLocation $ASDKConfiguratorParams.IsoPath2019
         }
 
-        if ($AsdkConfigurator.Autorun -eq 'false') 
+        if ($ASDKConfiguratorParams.IsoPath)
         {
-<#
-            $script = @"
-Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
-New-Item -ItemType Directory -Path $($ASDKConfiguratorParams.downloadPath) -Force -Verbose
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-Webrequest http://aka.ms/configasdk -UseBasicParsing -OutFile $($AsdkConfigurator.path)\ConfigASDK.ps1 -Verbose
+            DownloadWithRetry -Uri http://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -DownloadLocation $ASDKConfiguratorParams.IsoPath
+        }
 
-"@
-#>
-
-$script = @"
-Import-Module "$defaultLocalPath\ASDKHelperModule.psm1" -ErrorAction Stop
-New-Item -ItemType Directory -Path $($ASDKConfiguratorParams.downloadPath) -Force -Verbose
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-Webrequest $($AsdkConfigurator.AzSPoCURL) -UseBasicParsing -OutFile $($AsdkConfigurator.path)\$($AsdkConfigurator.command) -Verbose
-
-"@
-
-            if ($ASDKConfiguratorParams.IsoPath2019)
-            {
-                $script += @"
-DownloadWithRetry -Uri https://software-download.microsoft.com/download/pr/17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso -DownloadLocation $($ASDKConfiguratorParams.IsoPath2019)
-
-"@
-            }
-
-            if ($ASDKConfiguratorParams.IsoPath)
-            {
-                $script += @"
-DownloadWithRetry -Uri http://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -DownloadLocation $($ASDKConfiguratorParams.IsoPath)
-
-"@
-            }
-
-            $script += @"
-$commandsToRun
-
-"@
-
-            $script |  Out-File -FilePath (Join-Path -Path $AsdkConfigurator.path -ChildPath Run-ConfigASDK.ps1)  -Encoding ASCII
-        } 
+        #$commandsToRun |  Out-File -FilePath (Join-Path -Path $defaultLocalPath -ChildPath Run-ConfigASDK.ps1)  -Encoding ASCII
+        $commandsToRun |  Out-File -FilePath (Join-Path -Path $defaultLocalPath -ChildPath Run-ConfigASDK.ps1) -Encoding ASCII
     }
 }
-
-if ($ASDKImage)
+else
 {
-    if (!($AutoInstallASDK))
-    {
-        $WshShell = New-Object -comObject WScript.Shell
-        $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\AAD_Install-ASDK.lnk")
-        $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-        $Shortcut.WorkingDirectory = "$defaultLocalPath"
-        $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -SkipWorkaround}"
-        $Shortcut.Save()
-
-        $WshShell = New-Object -comObject WScript.Shell
-        $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\ADFS_Install-ASDK.lnk")
-        $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-        $Shortcut.WorkingDirectory = "$defaultLocalPath"
-        $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS -SkipWorkaround}"
-        $Shortcut.Save()
-
-        $WshShell = New-Object -comObject WScript.Shell
-        $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\Install-ASDK.lnk")
-        $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-        $Shortcut.WorkingDirectory = "$defaultLocalPath"
-        $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -SkipWorkaround}"
-        $Shortcut.Save()
-    }
+    Write-Log @writeLogParams -Message 'ASDKConfiguratorObject array missing; exiting'
+    Break ; Break
 }
 
 if ($AzureImage)
@@ -297,7 +220,7 @@ if ($AzureImage)
     Enable-WSManCredSSP -Role Client -DelegateComputer "*" -Force
     Enable-WSManCredSSP -Role Server -Force
 
-    Install-PackageProvider nuget -Force
+    Install-PackageProvider nuget -Force 
 
     Set-ExecutionPolicy unrestricted -Force
 
@@ -319,157 +242,66 @@ if ($AzureImage)
         $latestASDK = (findLatestASDK -asdkURIRoot "https://azurestack.azureedge.net/asdk" -asdkFileList $AsdkFileList)[0]
     }
     
-    if ($AutoDownloadASDK -eq "true")
+    #Download ASDK files (BINs and EXE)
+    Write-Log @writeLogParams -Message "Finding available ASDK versions"
+
+    $asdkDownloadPath = "d:\"
+    $asdkExtractFolder = "Azure Stack Development Kit"
+
+    $asdkFiles = ASDKDownloader -Version $latestASDK -Destination $asdkDownloadPath
+
+    Write-Log @writeLogParams -Message "$asdkFiles"
+    
+    #Extracting Azure Stack Development kit files
+            
+    $f = Join-Path -Path $asdkDownloadPath -ChildPath $asdkFiles[0].Split("/")[-1]
+    $d = Join-Path -Path $asdkDownloadPath -ChildPath $asdkExtractFolder
+
+    Write-Log @writeLogParams -Message "Extracting Azure Stack Development kit files;"
+    Write-Log @writeLogParams -Message "to $d"
+
+    ExtractASDK -File $f -Destination $d
+
+    $vhdxFullPath = Join-Path -Path $d -ChildPath "cloudbuilder.vhdx"
+
+    if (Test-Path -Path $vhdxFullPath)
     {
-        #Download ASDK files (BINs and EXE)
-        Write-Log @writeLogParams -Message "Finding available ASDK versions"
+        Write-Log @writeLogParams -Message "About to Start Copying ASDK files to C:\"
+        Write-Log @writeLogParams -Message "Mounting cloudbuilder.vhdx"
+        Copy-ASDKContent -vhdxFullPath $vhdxFullPath -Verbose
+    } 
 
-        $asdkDownloadPath = "d:\"
-        $asdkExtractFolder = "Azure Stack Development Kit"
+    Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
+    $WshShell = New-Object -comObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
+    $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+    $Shortcut.WorkingDirectory = "$defaultLocalPath"
+    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
+    $Shortcut.Save()
 
-        $asdkFiles = ASDKDownloader -Version $latestASDK -Destination $asdkDownloadPath
+    Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
+    $WshShell = New-Object -comObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
+    $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+    $Shortcut.WorkingDirectory = "$defaultLocalPath"
+    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD}"
+    $Shortcut.Save()
 
-        Write-Log @writeLogParams -Message "$asdkFiles"
-        
-        #Extracting Azure Stack Development kit files
-                
-        $f = Join-Path -Path $asdkDownloadPath -ChildPath $asdkFiles[0].Split("/")[-1]
-        $d = Join-Path -Path $asdkDownloadPath -ChildPath $asdkExtractFolder
-
-        Write-Log @writeLogParams -Message "Extracting Azure Stack Development kit files;"
-        Write-Log @writeLogParams -Message "to $d"
-
-        ExtractASDK -File $f -Destination $d
-
-        $vhdxFullPath = Join-Path -Path $d -ChildPath "cloudbuilder.vhdx"
-
-        if (Test-Path -Path $vhdxFullPath)
-        {
-            Write-Log @writeLogParams -Message "About to Start Copying ASDK files to C:\"
-            Write-Log @writeLogParams -Message "Mounting cloudbuilder.vhdx"
-            Copy-ASDKContent -vhdxFullPath $vhdxFullPath -Verbose
-        } 
-
-        if (!($AutoInstallASDK))
-        {
-
-            Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
-            $WshShell = New-Object -comObject WScript.Shell
-            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
-            $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-            $Shortcut.WorkingDirectory = "$defaultLocalPath"
-            $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
-            $Shortcut.Save()
-
-            Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
-            $WshShell = New-Object -comObject WScript.Shell
-            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
-            $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-            $Shortcut.WorkingDirectory = "$defaultLocalPath"
-            $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD}"
-            $Shortcut.Save()
-
-            Write-Log @writeLogParams -Message "Creating shortcut 3_ADFS_Install-ASDK.lnk"
-            $WshShell = New-Object -comObject WScript.Shell
-            $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
-            $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-            $Shortcut.WorkingDirectory = "$defaultLocalPath"
-            $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS}"
-            $Shortcut.Save()
-        }
-
-        #$downloadASDK = $null
-    }
-    else
-    {
-        if (!($AutoInstallASDK))
-        {
-            #Creating desktop shortcut for Install-ASDK.ps1
-            if ($EnableDownloadASDK)
-            {
-
-                Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
-                $Shortcut.Save()
-
-                Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType AAD}"
-                $Shortcut.Save()
-
-                Write-Log @writeLogParams -Message "Creating shortcut 3_ADFS_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -DeploymentType ADFS}"
-                $Shortcut.Save()
-
-                Write-Log @writeLogParams -Message "Creating shortcut 4_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\4_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK}"
-                $Shortcut.Save()
-
-                Write-Log @writeLogParams -Message "Creating shortcut 5_Latest_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\5_Latest_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DownloadASDK -Version $latestASDK}"
-                $Shortcut.Save()
-            }
-            else
-            {
-
-                Write-Log @writeLogParams -Message "Creating shortcut 1_AAD_LatestVer_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
-                $Shortcut.Save()
-
-                Write-Log @writeLogParams -Message "Creating shortcut 2_AAD_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD}"
-                $Shortcut.Save()
-
-                Write-Log @writeLogParams -Message "Creating shortcut 3_ADFS_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS}"
-                $Shortcut.Save()
-
-                Write-Log @writeLogParams -Message "Creating shortcut 4_Install-ASDK.lnk"
-                $WshShell = New-Object -comObject WScript.Shell
-                $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\4_Install-ASDK.lnk")
-                $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-                $Shortcut.WorkingDirectory = "$defaultLocalPath"
-                $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1}"
-                $Shortcut.Save()
-            }
-        }
-        #$downloadASDK = "-DownloadASDK"
-    }
+    Write-Log @writeLogParams -Message "Creating shortcut 3_ADFS_Install-ASDK.lnk"
+    $WshShell = New-Object -comObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
+    $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+    $Shortcut.WorkingDirectory = "$defaultLocalPath"
+    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS}"
+    $Shortcut.Save()
 
     # Enable differencing roles from ASDKImage except .NET framework 3.5
     Enable-WindowsOptionalFeature -Online -All -NoRestart -FeatureName @("ActiveDirectory-PowerShell", "DfsMgmt", "DirectoryServices-AdministrativeCenter", "DirectoryServices-DomainController", "DirectoryServices-DomainController-Tools", "DNS-Server-Full-Role", "DNS-Server-Tools", "DSC-Service", "FailoverCluster-AutomationServer", "FailoverCluster-CmdInterface", "FSRM-Management", "IIS-ASPNET45", "IIS-HttpTracing", "IIS-ISAPIExtensions", "IIS-ISAPIFilter", "IIS-NetFxExtensibility45", "IIS-RequestMonitor", "ManagementOdata", "NetFx4Extended-ASPNET45", "NFS-Administration", "RSAT-ADDS-Tools-Feature", "RSAT-AD-Tools-Feature", "Server-Manager-RSAT-File-Services", "UpdateServices-API", "UpdateServices-RSAT", "UpdateServices-UI", "WAS-ConfigurationAPI", "WAS-ProcessModel", "WAS-WindowsActivationService", "WCF-HTTP-Activation45", "Microsoft-Hyper-V-Management-Clients")
-
+}
+else
+{
+    Write-Log @writeLogParams -Message "AzureImage variable missing; exiting"
+    Break ; Break 
 }
 
 #Download OneNodeRole.xml
@@ -508,88 +340,6 @@ if ($null -ne $WindowsFeature.RemoveFeature.Name)
 
 Rename-LocalUser -Name $username -NewName Administrator
 Set-LocalUser -Name Administrator -Password ($ASDKConfiguratorParams.VMpwd | ConvertTo-SecureString -AsPlainText -Force)
-
-<#
-if ($AutoInstallASDK)
-{
-    if (!($AsdkFileList))
-    {
-        $AsdkFileList = @("AzureStackDevelopmentKit.exe")
-        1..10 | ForEach-Object {$AsdkFileList += "AzureStackDevelopmentKit-$_" + ".bin"}
-    }
-    [ValidateSet("AAD", "ADFS")][string]$deploymentType = "AAD"
-
-    $version = $latestASDK
-    
-    $taskName3 = "Auto ASDK Installer Service"
-    Write-Log @writeLogParams -Message "Registering $taskname3"
-
-    #Enable Autologon
-    $AutoLogonRegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoAdminLogon" -Value "1" -Type String
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultUsername" -Value "$($env:ComputerName)\Administrator" -type String
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "DefaultPassword" -Value "$($LocalAdminPass)" -Type String
-    Set-ItemProperty -Path $AutoLogonRegPath -Name "AutoLogonCount" -Value "1" -Type DWord
-    
-    $AutoInstallASDKScriptBlock = @" 
-if ((Test-Path -Path 'D:\Azure Stack Development Kit\cloudbuilder.vhdx') -and (Test-Path -Path 'c:\CloudDeployment') -and (Test-Path -Path 'C:\CloudDeployment\Logs\Deployment.*.log'))
-{
-    Get-ScheduledTask -TaskName "$($taskName3)" | Disable-ScheduledTask
-}
-else
-{
-    `$lPass = `'$LocalAdminPass`'
-    `$aadPass = `'$AzureADGlobalAdminPass`'
-    `$InfraAzureDirectoryTenantAdminCredential = New-Object System.Management.Automation.PSCredential (`'$AzureADGlobalAdmin`', `$aadPass)
-
-"@
-
-if ($ASDKImage)
-{
-    $AutoInstallASDKScriptBlock += @" 
-    
-    $defaultLocalPath\Install-ASDK.ps1 -DeploymentType "$deploymentType" -LocalAdminPass `$lPass -AADTenant "$AzureADTenant" -InfraAzureDirectoryTenantAdminCredential `$InfraAzureDirectoryTenantAdminCredential -SkipWorkaround
-
-"@
-}
-
-if ($AzureImage)
-{
-    $AutoInstallASDKScriptBlock += @" 
-    
-    $defaultLocalPath\Install-ASDK.ps1 $downloadASDK -DeploymentType "$deploymentType" -LocalAdminPass `$lPass -AADTenant "$AzureADTenant" -InfraAzureDirectoryTenantAdminCredential `$InfraAzureDirectoryTenantAdminCredential -Version "$version"
-
-"@
-}
-
-$AutoInstallASDKScriptBlock += @" 
-}
-"@  
-
-    if (Get-ScheduledTask -TaskName $taskName3 -ErrorAction SilentlyContinue)
-    {
-        Get-ScheduledTask -TaskName $taskName3 | Unregister-ScheduledTask -Force
-    }
-
-    $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $AutoInstallASDKScriptBlock
-
-    $registrationParams=
-    @{
-        TaskName = $taskName3
-        TaskPath = '\AzureStackonAzureVM'
-        Action = $action
-        Settings = New-ScheduledTaskSettingsSet -Priority 4
-        Force = $true
-    }
-
-    #$registrationParams.Trigger = New-ScheduledTaskTrigger -AtLogOn
-    $registrationParams.Trigger = New-ScheduledTaskTrigger -AtStartup
-    $registrationParams.User = "$($env:ComputerName)\Administrator"
-    $registrationParams.RunLevel = 'Highest'
-
-    Register-ScheduledTask @registrationParams
-}
-#>
 
 $MSI = "C:\AzureStackOnAzureVM\MicrosoftEdgeEnterpriseX64.msi"
 if ([System.IO.File]::Exists($MSI) -eq $TRUE)
