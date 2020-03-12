@@ -301,7 +301,7 @@ if ($AzureImage)
 else
 {
     Write-Log @writeLogParams -Message "AzureImage variable missing; exiting"
-    Break ; Break 
+    Break ; Break
 }
 
 #Download OneNodeRole.xml
