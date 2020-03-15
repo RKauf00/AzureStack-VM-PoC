@@ -113,7 +113,7 @@
 # Template Variables
 
     # Set Instance Number
-    [int]    $instanceNumber           =  2                                      # Resource Group Name Suffix
+    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
 
     # Set Azure Values
  
@@ -124,10 +124,6 @@
     [string] $siteLocation             =  $Location                              #"usgovtexas"
     [string] $resourceGroupNamePrefix  =  'AzStackPOC'                           # Resource Group Name Prefix
     [string] $resourceGroupName        =  "$($resourceGroupNamePrefix)-$($instanceNumber)"
-    #[string] $AzureADGlobalAdmin       =  Read-Host "Azure AD Global Admin account UPN"
-<#----#>
-<#----#>                [String] $AzureADGlobalAdmin       =  'AzStackHostAdmin@Azure-Stack.us'
-<#----#>
 
     # Set Azure VM Values
     [String] $adminUsername            =  'AzStackAdmin'                          # VM Admin User Name
@@ -148,10 +144,8 @@
 
     # Set Administrator Passwords
     #[SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
-    #[SecureString] $AzureADGlobalAdminPassword  =  Read-Host -AsSecureString -Prompt "Provide password for $($AzureADGlobalAdmin)" | ConvertTo-SecureString -AsPlainText -Force
 <#----#>
 <#----#>            [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
-<#----#>            [SecureString] $AzureADGlobalAdminPassword  =  '1209qwpo!@)(QWPO' | ConvertTo-SecureString -AsPlainText -Force
 <#----#>
 
 
@@ -173,7 +167,6 @@
         $templateParameterObject=@{}
         $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
         $templateParameterObject.Add("siteLocation",$siteLocation)
-        $templateParameterObject.Add("AzureADGlobalAdmin",$AzureADGlobalAdmin)
         $templateParameterObject.Add("adminUsername",$adminUsername)
         $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
         $templateParameterObject.Add("virtualMachineName",$virtualMachineName)
@@ -187,7 +180,6 @@
         $templateParameterObject.Add("subnetPrefix",$subnetPrefix)
         $templateParameterObject.Add("publicDnsName",$publicDnsName.ToLower())
         $templateParameterObject.Add("publicIpAddressType",$publicIpAddressType)
-        $templateParameterObject.Add("AzureADGlobalAdminPassword",$AzureADGlobalAdminPassword)
 
         # Use ARM Template Parameters Object
         New-AzResourceGroupDeployment `
