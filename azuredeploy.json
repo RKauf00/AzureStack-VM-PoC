@@ -258,7 +258,7 @@
                             "fileUris": [
                                 "[variables('fileUri')]"
                             ],
-                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'), ' -Username ', parameters('adminUsername'), ' -AzureADTenant ', parameters('AzureADTenant'), ' -Branch ', parameters('branch'), ' -EnableRDSH ', parameters('enableRDSH'), variables('ASDKConfiguratorParameters'))]"
+                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'), ' -Username ', parameters('adminUsername'), ' -Branch ', parameters('branch'), ' -EnableRDSH ', parameters('enableRDSH'), variables('ASDKConfiguratorParameters'))]"
                         }
                     }
                 }
