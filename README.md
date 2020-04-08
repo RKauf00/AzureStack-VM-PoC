@@ -12,10 +12,12 @@ This template creates a new Azure VM, and installs, configures all prerequisites
 
 [![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.png)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FRKauf00%2FAzureStack-VM-PoC%2Fmaster%2Fazuredeploy.json)
 
-or use http://aka.ms/AzureStackonAzureVM
+or use:
+- https://aka.ms/Azure-AzStackPOC (Azure Commercial)
+- https://aka.ms/AzureGov-AzStackPOC (Azure US Gov)
 
 or **Deploy to Azure** (**deploy.azure.com**)
-
+https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fyagmurs%2FAzureStack-VM-PoC%2Fmaster%2Fazuredeploy.json
 [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
 ### High level steps to follow
