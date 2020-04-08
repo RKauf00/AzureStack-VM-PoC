@@ -29,4 +29,4 @@ or use:
 **updates on 08.04.2019**
 - Tested with ASDK 1.1907.0.20
   
-Feel free to post questions and enjoy!
+Enjoy!
