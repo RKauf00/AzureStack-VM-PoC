@@ -25,7 +25,7 @@
             }
         },
         "dataDiskSizeinGB": {
-            "defaultValue": 1024,
+            "defaultValue": 2048,
             "type": "int",
             "allowedValues": [
                 256,
@@ -38,7 +38,7 @@
             }
         },
         "dataDiskCount": {
-            "defaultValue": 8,
+            "defaultValue": 4,
             "type": "int",
             "allowedValues": [
                 4,
@@ -129,9 +129,10 @@
                     "azureDirectoryTenantName": "[parameters('AzureADTenant')]",
                     "authenticationType": "AzureAD",
                     "downloadPath": "D:\\ASDKfiles",
-                    "ISOPath": "D:\\WS2016EVALISO.iso",
+                    "ISOPath2016": "D:\\WS2016EVALISO.iso",
                     "IsoPath2019": "D:\\WS2019EVALISO.iso",
-                    "VMpwd": "[parameters('adminPassword')]",
+                    "IsoPathWin10": "D:\\Win10EntEval.iso",
+                    "VMpwd": "[parameters('adminPassword')]"
                }
             }
         },
@@ -254,7 +255,7 @@
                         "type": "CustomScriptExtension",
                         "typeHandlerVersion": "1.9",
                         "autoUpgradeMinorVersion": true,
-                        "settings": {
+                        "protectedSettings": {
                             "fileUris": [
                                 "[variables('fileUri')]"
                             ],

@@ -40,10 +40,8 @@
     Import-Module AZ
 
 
-# Script Parameters
+# Parameters
 
-    [bool] $UseParamObject = $TRUE
-    
     [bool] $GovDeployment  = $TRUE
 
     if ($GovDeployment -eq $TRUE)
@@ -59,11 +57,6 @@
 
     [ValidateSet("development","master")] [string] $gitBranch = "master"        # GitHub branch 
     [string] $Template = "https://raw.githubusercontent.com/RKauf00/AzureStack-VM-PoC/$($gitBranch)/azuredeploy.json"
-    
-    if ($UseParamObject -eq $FALSE)
-    {
-        [string] $TemplateParams = "<Path to File>"
-    }
 
     
 # Connect Azure Account
@@ -89,7 +82,7 @@
 
     # Evaluate Azure Subscription Data
     if (!($Subscription))
-    {rikauf
+    {
         return Write-Host 'Failed to connect to AzAccount; exiting'
         break ; break
     }
@@ -112,8 +105,8 @@
 
 # Template Variables
 
-    # Set Instance Number
-    [int]    $instanceNumber           =  1                                      # Resource Group Name Suffix
+    # Set Instance Number (Resource Group Name Suffix)
+    [int]    $instanceNumber           =  1
 
     # Set Azure Values
  
@@ -156,51 +149,36 @@
 
 # Deploy GitHub ARM Template
 
-    if ($UseParamObject -eq $TRUE)
-    {
-        # Create ARM Template Parameter Object
+    ## Purge templateParameterObject Variable
+    Remove-Variable templateParameterObject -ErrorAction SilentlyContinue
 
-        ## Purge templateParameterObject Variable
-        Remove-Variable templateParameterObject -ErrorAction SilentlyContinue
+    ## Build templateParameterObject Variable
+    $templateParameterObject=@{}
+    $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
+    $templateParameterObject.Add("siteLocation",$siteLocation)
+    $templateParameterObject.Add("adminUsername",$adminUsername)
+    $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
+    $templateParameterObject.Add("virtualMachineName",$virtualMachineName)
+    $templateParameterObject.Add("virtualMachineSize",$virtualMachineSize)
+    $templateParameterObject.Add("dataDiskSizeinGB",$dataDiskSizeinGB)
+    $templateParameterObject.Add("dataDiskCount",$dataDiskCount)
+    $templateParameterObject.Add("enableRDSH",$enableRDSH)
+    $templateParameterObject.Add("virtualNetworkName",$virtualNetworkName)
+    $templateParameterObject.Add("addressPrefix",$addressPrefix)
+    $templateParameterObject.Add("subnetName",$subnetName)
+    $templateParameterObject.Add("subnetPrefix",$subnetPrefix)
+    $templateParameterObject.Add("publicDnsName",$publicDnsName.ToLower())
+    $templateParameterObject.Add("publicIpAddressType",$publicIpAddressType)
 
-        ## Build templateParameterObject Variable
-        $templateParameterObject=@{}
-        $templateParameterObject.Add("AzureADTenant",$AzureADTenant)
-        $templateParameterObject.Add("siteLocation",$siteLocation)
-        $templateParameterObject.Add("adminUsername",$adminUsername)
-        $templateParameterObject.Add("adminPassword", $SecureAdminPassword)
-        $templateParameterObject.Add("virtualMachineName",$virtualMachineName)
-        $templateParameterObject.Add("virtualMachineSize",$virtualMachineSize)
-        $templateParameterObject.Add("dataDiskSizeinGB",$dataDiskSizeinGB)
-        $templateParameterObject.Add("dataDiskCount",$dataDiskCount)
-        $templateParameterObject.Add("enableRDSH",$enableRDSH)
-        $templateParameterObject.Add("virtualNetworkName",$virtualNetworkName)
-        $templateParameterObject.Add("addressPrefix",$addressPrefix)
-        $templateParameterObject.Add("subnetName",$subnetName)
-        $templateParameterObject.Add("subnetPrefix",$subnetPrefix)
-        $templateParameterObject.Add("publicDnsName",$publicDnsName.ToLower())
-        $templateParameterObject.Add("publicIpAddressType",$publicIpAddressType)
+    ## Start New Deployment
+    New-AzResourceGroupDeployment `
+        -Name "$resourceGroupName-POC-Deployment" `
+        -ResourceGroupName $resourceGroupName `
+        -TemplateUri $Template `
+        -TemplateParameterObject $templateParameterObject `
+        -Mode Incremental `
+        -AsJob
 
-        # Use ARM Template Parameters Object
-        New-AzResourceGroupDeployment `
-            -Name "$resourceGroupName-POC-Deployment" `
-            -ResourceGroupName $resourceGroupName `
-            -TemplateUri $Template `
-            -TemplateParameterObject $templateParameterObject `
-            -Mode Incremental `
-            -AsJob
-    }
-    else
-    {
-        # Use ARM Template Parameters File
-        New-AzResourceGroupDeployment `
-            -Name "$resourceGroupName-POC-Deployment" `
-            -ResourceGroupName $resourceGroupName `
-            -TemplateUri $Template `
-            -TemplateParameterFile $TemplateParams `
-            -Mode Incremental `
-            -AsJob
-    }
 
 
 # Open Deployment Blade in Azure Portal
