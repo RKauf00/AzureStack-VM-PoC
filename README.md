@@ -4,7 +4,7 @@ Creates a new VM and installs prerequisites to install AzureStack Development ki
 ### Description
 This template creates a new Azure VM, and installs, configures all prerequisites that is required to install Azure Stack Development Kit to simplify evaluating all Azure Stack functionalities. 
 
-### Deploy ARM template 
+### Deploy ARM template
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fyagmurs%2FAzureStack-VM-PoC%2Fmaster%2Fazuredeploy.json)
 
