@@ -409,7 +409,7 @@ function ConvertTo-HashtableFromPsCustomObject {
     process { 
         foreach ($myPsObject in $psCustomObject) { 
             $output = @{}; 
-            $myPsObject | Get-Member -MemberType *Property | % { 
+            $myPsObject | Get-Member -MemberType *Property | ForEach-Object { 
                 $output.($_.name) = $myPsObject.($_.name); 
             } 
             $output; 
