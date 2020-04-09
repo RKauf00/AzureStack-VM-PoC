@@ -1,10 +1,12 @@
 
+#
 # Notes
+#
 
     #
-    #   Azure Region must host E and D VM sizes supporting nested virtualization (Confirmed: Commercial - EastUS2 | US Gov - USGovTexas)
+    #   Azure Region must host D and E VM sizes supporting nested virtualization
     #
-    #   VM Sizing for ASDK 1910:
+    #   VM Sizing:
     #
     #       Reference: https://docs.microsoft.com/en-us/azure-stack/asdk/asdk-deploy-considerations?view=azs-1910
     #
@@ -41,6 +43,8 @@
 
 
 # Parameters
+
+    [int]  $instanceNumber  =  3
 
     [bool] $GovDeployment  = $TRUE
 
@@ -104,9 +108,6 @@
 
 
 # Template Variables
-
-    # Set Instance Number (Resource Group Name Suffix)
-    [int]    $instanceNumber           =  2
 
     # Set Azure Values
  
