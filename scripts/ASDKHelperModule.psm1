@@ -283,7 +283,15 @@ function createDesktopShortcuts
         $Favorite.Save()
         Write-Log @writeLogParams -Message "Desktop shorcuts $fileName created."
     }
-
+            
+    $fileName = $env:ALLUSERSPROFILE + "\Desktop\Azure Stack Documentation.url"
+    if (!(Test-Path -Path $fileName))
+    {
+        $Favorite = $Shell.CreateShortcut($fileName)
+        $Favorite.TargetPath = "C:\AzureStackOnAzureVM\MSDocs-ASDK-28FEB2020.pdf";
+        $Favorite.Save()
+        Write-Log @writeLogParams -Message "Desktop shorcut $fileName created."
+    }
 }
 
 

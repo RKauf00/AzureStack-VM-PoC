@@ -106,14 +106,11 @@
 # Template Variables
 
     # Set Instance Number (Resource Group Name Suffix)
-    [int]    $instanceNumber           =  1
+    [int]    $instanceNumber           =  2
 
     # Set Azure Values
  
-    #[string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
-<#----#>
-<#----#>            [String] $AzureADTenant            =  'Azure-Stack.us'
-<#----#>
+    [string] $AzureADTenant            =  Read-Host "Azure AD Tenant (Format: <AzureADTenant>.onmicrosoft.com)"
     [string] $siteLocation             =  $Location                              #"usgovtexas"
     [string] $resourceGroupNamePrefix  =  'AzStackPOC'                           # Resource Group Name Prefix
     [string] $resourceGroupName        =  "$($resourceGroupNamePrefix)-$($instanceNumber)"
@@ -136,10 +133,7 @@
     [string] $publicIpAddressType      =  'Dynamic'
 
     # Set Administrator Passwords
-    #[SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
-<#----#>
-<#----#>            [SecureString] $SecureAdminPassword         =  '*W^Ma03,k.u^49)6cq'  | ConvertTo-SecureString -AsPlainText -Force
-<#----#>
+    [SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
 
 
 # Create Resource Group
