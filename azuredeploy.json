@@ -129,11 +129,12 @@
                     "azureDirectoryTenantName": "[parameters('AzureADTenant')]",
                     "authenticationType": "AzureAD",
                     "downloadPath": "D:\\ASDKfiles",
-                    "ISOPath2016": "D:\\WS2016EVALISO.iso",
+                    "ISOPath": "D:\\WS2016EVALISO.iso",
                     "IsoPath2019": "D:\\WS2019EVALISO.iso",
-                    "IsoPathWin10": "D:\\Win10EntEval.iso",
-                    "VMpwd": "[parameters('adminPassword')]"
-               }
+                    "VMpwd": "[parameters('adminPassword')]",
+                    "asdkHostPwd": "[parameters('adminPassword')]"
+               },
+                "IsoPathWin10": "D:\\Win10EntEval.iso"
             }
         },
         "enableRDSH": {

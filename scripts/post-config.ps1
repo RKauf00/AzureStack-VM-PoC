@@ -96,7 +96,14 @@
 
 # Download MSDocs Azure Stack Development Kit PDF
 
-    DownloadWithRetry -Uri "$branchFullPath/files/MSDocs-ASDK-28FEB2020.pdf" -DownloadLocation "$defaultLocalPath\MSDocs-ASDK-28FEB2020.pdf"
+    New-Item -Path 'C:\_GettingStarted' -ItemType Directory
+    DownloadWithRetry -Uri "$branchFullPath/files/MSDocs-ASDK-28FEB2020.pdf" -DownloadLocation "C:\_GettingStarted\MSDocs-ASDK-28FEB2020.pdf"
+
+
+# Download Getting Started Favorites File
+
+    New-Item -Path 'C:\_GettingStarted' -ItemType Directory
+    DownloadWithRetry -Uri "$branchFullPath/files/Getting_Started.html" -DownloadLocation "C:\_GettingStarted\Getting_Started.html"
 
 
 # Download and Extract Mobaxterm
@@ -189,17 +196,17 @@
             # Download ISO Files
             if ($ASDKConfiguratorParams.IsoPath2019)
             {
-                DownloadWithRetry -Uri https://software-download.microsoft.com/download/en-us/17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso -DownloadLocation $ASDKConfiguratorParams.IsoPath2019
+                DownloadWithRetry -Uri https://software-download.microsoft.com/download/17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso -DownloadLocation $ASDKConfiguratorParams.IsoPath2019
             }
 
             if ($ASDKConfiguratorParams.IsoPath2016)
             {
-                DownloadWithRetry -Uri http://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -DownloadLocation $ASDKConfiguratorParams.IsoPath2016
+                DownloadWithRetry -Uri http://download.microsoft.com/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -DownloadLocation $ASDKConfiguratorParams.IsoPath
             }
 
             if ($ASDKConfiguratorParams.IsoPathWin10)
             {
-                DownloadWithRetry -Uri https://software-download.microsoft.com/download/18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso -DownloadLocation $ASDKConfiguratorParams.IsoPathWin10
+                DownloadWithRetry -Uri https://software-download.microsoft.com/download/18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso -DownloadLocation $ASDKConfigurator.IsoPathWin10
             }
 
             # Set Run-ConfigASDK.ps1 Content
@@ -293,23 +300,23 @@
 
 # Create Install-ASDK Desktop Shortcut
 
-    Write-Log @writeLogParams -Message "Creating shortcut: Install-ASDK.lnk"
+    Write-Log @writeLogParams -Message "Creating shortcut: 1_Install-ASDK.lnk"
     $WshShell = New-Object -comObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
     $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
     $Shortcut.WorkingDirectory = "$defaultLocalPath"
     $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
+    $Shortcut.Save()
+
+    Write-Log @writeLogParams -Message "Creating shortcut: 2_Run-ConfigAsdk.lnk"
+    $WshShell = New-Object -comObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_Run-ASDK.lnk")
+    $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+    $Shortcut.WorkingDirectory = "$defaultLocalPath"
+    $Shortcut.Arguments = "-Noexit -command & {.\Run-ConfigASDK.ps1}"
     $Shortcut.Save()
 
     <#
-    Write-Log @writeLogParams -Message "Creating shortcut: 1_AAD_LatestVer_Install-ASDK.lnk"
-    $WshShell = New-Object -comObject WScript.Shell
-    $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
-    $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-    $Shortcut.WorkingDirectory = "$defaultLocalPath"
-    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
-    $Shortcut.Save()
-
     Write-Log @writeLogParams -Message "Creating shortcut: 2_AAD_Install-ASDK.lnk"
     $WshShell = New-Object -comObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
