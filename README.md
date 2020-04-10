@@ -1,4 +1,4 @@
-# __Azure Stack on Azure VM__
+# __Deploy Azure Stack on an Azure VM__
 
 ## __Description__
 
