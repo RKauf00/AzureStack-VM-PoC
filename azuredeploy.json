@@ -131,9 +131,8 @@
                     "downloadPath": "D:\\ASDKfiles",
                     "ISOPath": "D:\\WS2016EVALISO.iso",
                     "IsoPath2019": "D:\\WS2019EVALISO.iso",
-                    "VMpwd": "[parameters('adminPassword')]",
-                    "asdkHostPwd": "[parameters('adminPassword')]"
-               },
+                    "VMpwd": "[parameters('adminPassword')]"
+                },
                 "IsoPathWin10": "D:\\Win10EntEval.iso"
             }
         },

@@ -316,24 +316,6 @@
     $Shortcut.Arguments = "-Noexit -command & {.\Run-ConfigASDK.ps1}"
     $Shortcut.Save()
 
-    <#
-    Write-Log @writeLogParams -Message "Creating shortcut: 2_AAD_Install-ASDK.lnk"
-    $WshShell = New-Object -comObject WScript.Shell
-    $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\2_AAD_Install-ASDK.lnk")
-    $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-    $Shortcut.WorkingDirectory = "$defaultLocalPath"
-    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD}"
-    $Shortcut.Save()
-
-    Write-Log @writeLogParams -Message "Creating shortcut: 3_ADFS_Install-ASDK.lnk"
-    $WshShell = New-Object -comObject WScript.Shell
-    $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\3_ADFS_Install-ASDK.lnk")
-    $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-    $Shortcut.WorkingDirectory = "$defaultLocalPath"
-    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType ADFS}"
-    $Shortcut.Save()
-    #>
-
 
 # Enable Differencing Roles from ASDKImage (except .NET framework 3.5)
 
