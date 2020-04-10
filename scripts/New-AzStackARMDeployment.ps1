@@ -44,7 +44,7 @@
 
 # Parameters
 
-    [int]  $instanceNumber  =  3
+    [int]  $instanceNumber  =  30
 
     [bool] $GovDeployment  = $TRUE
 

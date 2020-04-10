@@ -305,7 +305,7 @@
     $Shortcut = $WshShell.CreateShortcut("$env:ALLUSERSPROFILE\Desktop\1_AAD_LatestVer_Install-ASDK.lnk")
     $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
     $Shortcut.WorkingDirectory = "$defaultLocalPath"
-    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
+    $Shortcut.Arguments = "-Noexit -command & {.\Install-ASDK.ps1 -LocalAdminPass $($ASDKConfiguratorParams.VMpwd) -DeploymentType AAD -AADTenant $($ASDKConfiguratorParams.azureDirectoryTenantName) -Version latest}"
     $Shortcut.Save()
 
     Write-Log @writeLogParams -Message "Creating shortcut: 2_Run-ConfigAsdk.lnk"
