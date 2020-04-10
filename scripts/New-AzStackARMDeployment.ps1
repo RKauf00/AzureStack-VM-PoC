@@ -44,7 +44,7 @@
 
 # Parameters
 
-    [int]  $instanceNumber  =  30
+    [int]  $instanceNumber  =  32
 
     [bool] $GovDeployment  = $TRUE
 
@@ -134,7 +134,7 @@
     [string] $publicIpAddressType      =  'Dynamic'
 
     # Set Administrator Passwords
-    [SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" | ConvertTo-SecureString -AsPlainText -Force
+    [SecureString] $SecureAdminPassword         =  Read-Host -AsSecureString -Prompt "Provide password for local Administrator ($($adminUsername))" #| ConvertTo-SecureString -AsPlainText -Force
 
 
 # Create Resource Group
